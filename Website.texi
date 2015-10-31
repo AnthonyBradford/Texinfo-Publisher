@@ -1,0 +1,258 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@set Manual Website
+@setfilename @value{Manual}.info
+@settitle Texinfo Templates
+
+@c Define a new index for options.
+@defcodeindex op
+@c Combine everything into one index (arbitrarily chosen to be the
+@c concept index).
+@syncodeindex op cp
+@c %**end of header
+@image{images/open_book_blue,,80pt,Picture of a open book,png}
+
+@copying
+This is a template for a manual. Copyright @copyright{} 2012.
+
+@quotation
+All right reserved.
+@end quotation
+@end copying
+
+@dircategory Template
+@direntry
+* The Texinfo Website Template.               Test
+@end direntry
+
+@titlepage
+@title Texinfo Website Template
+@subtitle for version @today{}
+@sp 10
+@author @email{anthony_bradford@@yahoo.com,Anthony Bradford}
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@ifnothtml
+@contents
+@end ifnothtml
+
+@ifnottex
+@node Top
+@top Texinfo Website Template Version @today{}
+ 
+This is a Texinfo Template Website. Copyright @copyright{} 2012.
+@end ifnottex
+
+@html
+@ifset PDF
+<a href="@value{Manual}.pdf">PDF content of this website</a>
+<br>
+@end ifset
+@ifset DJVU
+<a href="@value{Manual}.djvu">DjVu content of this website</a>
+<br>
+@end ifset
+@ifset SPLIT
+<a href="index.html">Split HTML version of this website</a>
+<br>
+@end ifset
+@ifset NOSPLIT
+<a href="indexNoSplit.html">Non-Split HTML version of this website</a>
+<br>
+@end ifset
+@ifset TEXT
+@cindex Text
+@cindex Plain text
+<a href="@value{Manual}.txt">Text version of this website</a> 
+<br>
+@end ifset
+@ifset EPUB
+@cindex EPUB
+<a href="@value{Manual}.epub">EPUB content of this website</a> 
+<br>
+@end ifset
+@ifset POSTSCRIPT
+@cindex PostScript
+<a href="@value{Manual}.ps">PostScript content of this website</a> 
+<br>
+@end ifset
+@ifset DVI
+@cindex @TeX{} DVI
+@cindex DVI
+<a href="@value{Manual}.dvi">@TeX{} DVI version of this manual</a> 
+<br>
+@end ifset
+@ifset ZIP
+@cindex Zip
+<a href="@value{Manual}.zip">HTML zip package of this website</a>
+<br>
+@end ifset
+<a href="@value{Manual}.tar.gz">Gzipped tar source of this website</a> 
+<br>
+<br>
+@end html
+
+@ifnottex
+@menu
+* Chapter 1::
+* Chapter 2::
+* Colors::
+* Chapter 4::
+* Chapter 5::
+* Chapter 6::
+* Chapter 7::
+* Chapter 8::
+* Chapter 9::
+* Concept index::	Index of concepts.
+@end menu
+@end ifnottex
+
+@html
+@ifset LongContents
+@contents
+@end ifset
+@ifset ShortContents
+@shortcontents
+@end ifset
+@end html
+
+@node Chapter 1
+@chapter Chapter 1
+@cindex Chapter 1
+@section This is Chapter 1 section.
+Hello from Chapter 1 section.
+@subsection This is Chapter 1 subsection.
+Hello from Chapter 1 subsection.
+@subsubsection This is Chapter 1 subsubsection.
+Hello from Chapter 1 subsubsection.
+
+@node Chapter 2
+@chapter Chapter 2
+@cindex Chapter 2
+Test for Chapter 2. Chapter 2 does not have section, subsection and subsubsection divisions.
+These divisions are optional.
+@*
+@*
+@b{This is a test of using bold}.
+@*
+@*
+@i{This is a test of using italics}.
+
+@node Colors
+@chapter Colors
+@cindex Colors
+This is information on colors. This chapter used to be called Chapter 3.
+@section Red
+You write about the color red here
+@section White
+You write about the color white here.
+@section Blue
+You write about the color blue here.
+
+@node Chapter 4
+@chapter Chapter 4
+@cindex Chapter 4
+Test for Chapter 4. To change the name of Chapter 4, globally replace ``Chapter 4'' in this .texi file with a new name.
+@section This is Chapter 4 section.
+Enter your content here.
+@subsection This is Chapter 4 subsection.
+Enter your subsection content here.
+@subsubsection This is Chapter 4 subsubsection.
+Enter your subsubsection content here.
+
+@node Chapter 5
+@chapter Chapter 5
+@cindex Chapter 5
+Test for Chapter 5.
+@*
+@*
+This is a example of a itemized list
+@itemize
+@item One
+@item Two
+@item Three
+@item Four
+@item Five
+@item Six
+@item Seven
+@item Eight
+@item Nine
+@item Ten
+@end itemize
+
+@node Chapter 6
+@chapter Chapter 6
+@cindex Chapter 6
+Test for Chapter 6.
+@*
+@*
+Some URL examples
+@*
+@url{http://fsf.org}.
+@*
+@url{http://fsf.org,The Free Software Foundation}.
+@*
+@*
+Some email examples
+@*
+@email{anthony_bradford@@yahoo.com}.
+@*
+@email{anthony_bradford@@yahoo.com,Anthony Bradford}.
+
+
+@section This is Chapter 6 section.
+@subsection This is Chapter 6 subsection.
+@subsubsection This is Chapter 6 subsubsection.
+
+@node Chapter 7
+@chapter Chapter 7
+@cindex Chapter 7
+Test for Chapter 7.
+@*
+@*
+@center Something centered
+
+@node Chapter 8
+@chapter Chapter 8
+@cindex Chapter 8
+Image testing for Chapter 8.
+@*
+@*
+@image{images/open_book_blue,,80pt,Picture of a open book,png}
+@*
+@*
+Centered image test
+@*
+@*
+@center @image{images/open_book_blue,,80pt,Picture of a open book,png}
+@*
+@*
+Larger image testing. Images will only be scaled larger in the PDF content output.
+@*
+@*
+@image{images/open_book_blue,,120pt,Picture of a open book,png}
+@*
+@*
+@image{images/open_book_blue,,150pt,Picture of a open book,png}
+@*
+@*
+@image{images/open_book_blue,,180pt,Picture of a open book,png}
+@*
+@*
+
+@node Chapter 9
+@chapter Chapter 9
+@cindex Chapter 9
+Index testing for Chapter 9.
+@*
+This chapter forces the word Blueberry into the document index.
+@cindex Blueberry.
+
+@node Concept index
+@unnumbered Concept index
+@printindex cp
+
+@bye

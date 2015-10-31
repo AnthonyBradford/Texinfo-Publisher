@@ -1,0 +1,174 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@set Manual JavaApplet
+@setfilename @value{Manual}.info
+@settitle Texinfo Templates
+
+@c Define a new index for options.
+@defcodeindex op
+@c Combine everything into one index (arbitrarily chosen to be the
+@c concept index).
+@syncodeindex op cp
+@c %**end of header
+@c @image{images/open_book_blue,,80pt,Picture of a open book,png}
+
+@copying
+This is a template for a manual. Copyright @copyright{} 2012.
+
+@quotation
+All right reserved.
+@end quotation
+@end copying
+
+@dircategory Template
+@direntry
+* The Texinfo Website Template.               Test
+@end direntry
+
+@titlepage
+@title Texinfo Website Template
+@subtitle for version @today{}
+@sp 10
+@author @email{anthony_bradford@@yahoo.com,Anthony Bradford}
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@ifnothtml
+@contents
+@end ifnothtml
+
+@ifnottex
+@node Top
+@top Texinfo Website Template Version @today{}
+ 
+This is a Texinfo Website Template. Copyright @copyright{} 2012.
+@end ifnottex
+
+@html
+@ifset PDF
+<a href="@value{Manual}.pdf">PDF content of this website</a>
+<br>
+@end ifset
+@ifset DJVU
+<a href="@value{Manual}.djvu">DjVu content of this website</a>
+<br>
+@end ifset
+@ifset SPLIT
+<a href="index.html">Split HTML version of this website</a>
+<br>
+@end ifset
+@ifset NOSPLIT
+<a href="indexNoSplit.html">Non-Split HTML version of this website</a>
+<br>
+@end ifset
+@ifset ZIP
+@cindex Zip
+<a href="@value{Manual}.zip">HTML zip package of this website</a>
+<br>
+@end ifset
+@ifset TEXT
+@cindex Text
+@cindex Plain Text
+<a href="@value{Manual}.txt">Text version of this website</a> 
+<br>
+@end ifset
+@ifset EPUB
+@cindex EPUB
+<a href="@value{Manual}.epub">EPUB content of this website</a> 
+<br>
+@end ifset
+@ifset POSTSCRIPT
+@cindex PostScript
+<a href="@value{Manual}.ps">PostScript content of this website</a> 
+<br>
+@end ifset
+@ifset DVI
+@cindex @TeX{} DVI
+@cindex DVI
+<a href="@value{Manual}.dvi">@TeX{} DVI content of this website</a> 
+<br>
+@end ifset
+<br>
+@end html
+
+@ifnottex
+@menu
+* JavaApplet Example::
+* Chapter 2::
+* Chapter 3::
+* Concept index::	Index of concepts.
+@end menu
+@end ifnottex
+
+@html
+@ifset LongContents
+@contents
+@end ifset
+@ifset ShortContents
+@shortcontents
+@end ifset
+@end html
+
+@node JavaApplet Example
+@chapter JavaApplet Example
+@cindex JavaApplet
+@ifnothtml
+For the Java Applet example see the HTML version of this document.
+@end ifnothtml
+@html
+Web browser must support JavaScript to run. JavaScript may not run on mobile devices.
+@end html
+@html
+<head>
+  <title>HelloWorld_example.html</title>
+</head>
+<body>
+  <h1>A Java applet example</h1>
+  <p>Here it is: <applet code="HelloWorld.class" height="40" width="200" codebase = "files/">
+    This is where HelloWorld.class runs.
+  </applet></p>
+</body>
+</html>
+@end html
+
+@node Chapter 2
+@chapter Chapter 2
+@cindex Chapter 2
+Hello from Chapter 2.
+@html
+<script>
+if( Math.random() < 0.5 )
+{
+	if( Math.random() < 0.5 )
+	{
+		document.write("<BODY BGCOLOR=\"#6373B5\" TEXT=\"#FFFF00\" vlink=\"#800000\" link=\"#FFFF00\" alink=\"#000080\">");
+	} else
+	{
+		document.write("<body bgcolor=\"#006699\" text=\"#FFFF00\" vlink=\"#800000\" link=\"#FFFF00\" alink=\"#00FFFF\">");
+	}
+} else
+{
+	if( Math.random() < 0.5 )
+	{
+		document.write("<body bgcolor=\"#993333\" text=\"#FFFF00\" vlink=\"#6373B5\" link=\"#33CCFF\" alink=\"#000080\">");
+	} else
+	{
+		document.write("<body bgcolor=\"#C0C0C0\" text=\"#0000FF\" vlink=\"#800000\" link=\"#6373B5\" alink=\"#000080\">");
+	}
+}
+</script>
+<NOSCRIPT><BODY BGCOLOR="#6373B5" TEXT="#FFFF00" vlink="#800000" link="#FFFF00" alink="#000080"></NOSCRIPT>
+@end html
+
+@node Chapter 3
+@chapter Chapter 3
+@cindex Chapter 3
+Hello from Chapter 3.
+
+@node Concept index
+@unnumbered Concept index
+@printindex cp
+
+@bye

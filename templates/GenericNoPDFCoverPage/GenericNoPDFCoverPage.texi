@@ -1,0 +1,100 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@set Manual GenericNoPDFCoverPage
+@setfilename @value{Manual}.info
+@settitle Website Template
+
+@ifnottex
+@node Top
+@top Website Version @today{}
+@end ifnottex
+
+@c This is a Texinfo Template.
+
+@html
+@ifset PDF
+<a href="@value{Manual}.pdf">PDF content of this website</a>
+<br>
+@end ifset
+@ifset DJVU
+<a href="@value{Manual}.djvu">DjVu content of this website</a>
+<br>
+@end ifset
+@ifset SPLIT
+<a href="index.html">Split HTML content of this website</a>
+<br>
+@end ifset
+@ifset NOSPLIT
+<a href="indexNoSplit.html">Non-Split HTML content of this website</a>
+<br>
+@end ifset
+@ifset TEXT
+@cindex Text
+@cindex Plain Text
+<a href="@value{Manual}.txt">Text content of this website</a> 
+<br>
+@end ifset
+@ifset EPUB
+@cindex EPUB
+<a href="@value{Manual}.epub">EPUB content of this website</a> 
+<br>
+@end ifset
+@ifset POSTSCRIPT
+@cindex PostScript
+<a href="@value{Manual}.ps">PostScript content of this website</a> 
+<br>
+@end ifset
+@ifset DVI
+@cindex @TeX{} DVI
+@cindex DVI
+<a href="@value{Manual}.dvi">@TeX{} DVI content of this website</a> 
+<br>
+@end ifset
+@ifset ZIP
+@cindex Zip
+<a href="@value{Manual}.zip">HTML zip package of this website</a>
+<br>
+@end ifset
+<a href="@value{Manual}.tar.gz">Gzipped tar source of this website</a> 
+<br>
+<br>
+@end html
+
+@ifnottex
+@menu
+* Chapter1::
+* Chapter2::
+* Chapter3::
+* Chapter4::
+* Chapter5::
+* Chapter6::
+* Chapter7::
+@end menu
+@end ifnottex
+
+@html
+@c @contents
+@end html
+
+@node Chapter1
+@chapter Chapter1
+
+@node Chapter2
+@chapter Chapter2
+
+@node Chapter3
+@chapter Chapter3
+
+@node Chapter4
+@chapter Chapter4
+
+@node Chapter5
+@chapter Chapter5
+
+@node Chapter6
+@chapter Chapter6
+
+@node Chapter7
+@chapter Chapter7
+
+@bye

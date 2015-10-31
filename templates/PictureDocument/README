@@ -1,0 +1,25 @@
+You will need the Linux / UNIX packages that contain make,
+texi2any and texi2dvi. AsciiDoc is needed for the process
+to make hhp files.
+
+Run the command 'make'
+This will build:
+
+index.html and associated html files.
+	   This file has relative links to the .pdf, .txt and .zip files
+
+Manual.pdf - Your PDF manual
+Manual.txt - Text version of your manual
+Manual.zip - Zip files of HTML, PDF and .txt files. This Zip file can be
+             un-zipped in a public_html web server space to make a website.
+
+Run the command 'make website'.
+This will publish: 
+
+index.html and associated html files, Manual.pdf, Manual.txt, 
+Manual.zip, images directory and files directory to a website of
+your choice.
+
+Run the command 'make htmlhelper'. 
+This will create the file Manual.hhp which can be made into a
+Microsoft HTML Helper file (.chm) with the utility hhc.exe

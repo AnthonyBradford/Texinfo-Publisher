@@ -1,0 +1,275 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\hypersetup{pdfpagemode=UseNone}
+% Enable the next line so hyperlinks do not have blue boxes around them
+%\hypersetup{hidelinks}
+\usepackage{rotating}
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+	{ \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\textbf{\LaTeX\ Reference Card Template}} \\
+\end{center}
+
+\LaTeX\ Reference Card Template. \newline
+Use this template to create your own reference card. Actual reference cards
+can be two pages or more.
+
+\section{Downloading}
+Download the \LaTeX\ Reference Card Template from
+\href{http://AnthonyBradford.com/LaTeXreferenceCard/LaTeXreferenceCard-1.0.tar.gz}{LaTeXreferenceCard-1.0.tar.gz}.
+
+\section{Extracting}
+tar xfz LaTeXreferenceCard-1.0.tar.gz
+\newline
+cd LaTeXreferenceCard-1.0
+
+\section{Building}
+Type: make
+\newline
+See newly created PDF reference card.
+
+\section{Spelling}
+Type: make spelling
+\newline
+GNU aspell will be run in \TeX\ mode on the reference card.
+
+\section{Images}
+Keep images in the images/ directory. Makefile will automatically convert
+PNG, JPG and GIF to EPS format.
+
+\section{Distribution}
+Type: make dist
+\newline
+Creates LaTeXreferenceCard-1.0.tar.gz distribution.
+\newline
+\hrule
+
+\section{Section}
+This is a test of a section.
+\subsection{SubSection}
+This is a test of a subsection.
+\subsubsection{SubSubSection}
+This is a test of a subsubsection.
+
+\section{Centering}
+\begin{center}
+This text is centered.
+\end{center}
+
+\section{Flush right}
+\begin{flushright}
+This text is flush right.
+\end{flushright}
+
+\section{Fonts sizes}
+\begin{tabular}{ l r }
+\tiny{tiny} & \scriptsize{scriptsize} \\
+\footnotesize{footnotesize} & \small{small} \\
+\normalsize{normalsize} & \large{large} \\
+\Large{Large} & \LARGE{LARGE} \\
+\huge{huge} & \Huge{Huge} \\
+\end{tabular}
+
+\section{Fonts}
+\textnormal{Normal font}
+\newline
+\emph{Emphasis}
+\newline
+\textrm{Roman font family}
+\newline
+\textsf{Sans serif}
+\newline
+\texttt{Teletype font family}
+\newline
+\textup{Upright shape}
+\newline
+\textit{Italic}
+\newline
+\textsl{slanted shape}
+\newline
+\textbf{Bold}
+\newline
+\textsc{Small Caps}
+\newline
+\textmd{Medium weight}
+\newline
+\underline{Underline}
+
+\section{Colors}
+{\normalsize
+\colorbox{blue}{\color{white}{White}}
+\color{black}{Black}
+\color{red}{Red}
+\color{green}{Green}
+\color{blue}{Blue}
+\color{cyan}{Cyan}
+\color{magenta}{Magenta}
+\color{yellow}{Yellow}
+}
+
+\section{Enumerate}
+\begin{enumerate}
+\item One
+\item Two
+\item Three
+\end{enumerate}
+
+\section{Itemize}
+\begin{itemize}
+\item One
+\item Two
+\item Three
+\end{itemize}
+
+\section{Nested lists}
+\begin{enumerate}
+\item One
+\begin{enumerate}
+  \item Nested item 1
+  \item Nested item 2
+\end{enumerate}
+\item Two
+\item Three
+\end{enumerate}
+
+\section{Table}
+\begin{tabular} { l c r }
+  1 & 2 & 3 \\
+  4 & 5 & 6 \\
+  7 & 8 & 9 \\
+\end{tabular}
+
+\section{Table lines}
+\begin{tabular} { l | c | r }
+  1 & 2 & 3 \\ \hline
+  4 & 5 & 6 \\ \hline
+  7 & 8 & 9 \\
+\end{tabular}
+
+\section{Row column}
+\begin{tabular} { l | ll }
+  1 & 2 & 3 \\ \hline
+  4 & 5 & 6 \\ \hline
+  7 & 8 & 9 \\
+\end{tabular}
+
+\section{Greek}
+$\alpha$ $\beta$ $\chi$ $\delta$ $\epsilon$ $\eta$ $\gamma$ $\iota$ $\kappa$ $\lambda$ $\mu$ $\nu$ $\omega$ o $\phi$ $\pi$ $\psi$ $\rho$ $\sigma$ $\tau$ $\theta$ $\upsilon$ $\xi$ $\zeta$ \\
+A B C $\Delta$ E H $\Gamma$ I K $\Lambda$ M N $\Omega$ O $\Phi$ $\Pi$ $\Psi$ P $\Sigma$ T $\Theta$  $\Upsilon$ $\Xi$ Z
+
+\section{Text box}
+\framebox{Text in a box}
+{
+\setlength{\fboxsep}{10pt}
+\setlength{\fboxrule}{5pt}
+
+\fbox{Thick box}
+}
+
+\section{Rotate}
+\rotatebox{45}{Rotated 45} \newline \newline
+\rotatebox{90}{Rotated 90}
+
+\section{Graphics}
+\includegraphics[scale=0.25]{images/open_book_blue} \\
+\includegraphics[scale=0.5]{images/open_book_blue}
+
+\section{Graphics box}
+\fbox{\includegraphics[scale=0.5]{images/open_book_blue}}
+
+\section{Math}
+$\begin{array}{*{20}c} {x = \frac{{ - b \pm \sqrt {b^2 - 4ac} }}{{2a}}} & {{\rm{when}}} & {ax^2 + bx + c = 0} \\ \end{array}$
+
+\section{Misc}
+$\ast$ $\star$ $\diamond$ $\circ$ $\bullet$ $\odot$ $\bigcirc$ $\bigtriangleup$ $\bigtriangledown$ $\triangleleft$ $\triangleright$ $\dagger$ $\ddagger$ $\clubsuit$ $\diamondsuit$ $\heartsuit$ $\spadesuit$ $\sharp$
+
+\section{Links}
+
+\href{http://www.google.com/search?q=wikibooks+LaTeX}{Wikibooks \LaTeX}
+\newline
+\newline
+\href{http://www.google.com/search?q=LaTeX}{Search \LaTeX}
+\newline
+\newline
+\href{http://AnthonyBradford.com}{Anthony Bradford}
+\newline
+\newline
+\href{mailto:anthony_bradford@yahoo.com}{Email Anthony Bradford}
+
+\section{More projects}
+\subsection{\LaTeX\ Web Publishing Project}
+A multi-format web publishing system with FTP deployment capabilities based on \LaTeX\.
+See \href{http://AnthonyBradford.com/LaTeXpublisher/}{\LaTeX\ Web Publisher}
+\subsection{Texinfo Web Publishing Project}
+A multi-format web publishing system with FTP deployment capabilities based on GNU Texinfo.
+See \href{http://AnthonyBradford.com/TexinfoPublisher/}{Texinfo Web Publisher}
+
+\subsection{OptionMatrix}
+A financial derivatives calculator supporting over 135 models. See \htmladdnormallink{OptionMatrix}{http://AnthonyBradford.com/om/}.
+
+\rule{0.3\linewidth}{0.25pt}
+\scriptsize
+
+Copyright \copyright\ 2012 \href{http://AnthonyBradford.com}{Anthony Bradford}.
+
+\end{multicols}
+\end{document}

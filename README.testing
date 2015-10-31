@@ -1,0 +1,12 @@
+Texinfo Web Publisher was tested on the following:
+
+	Ubuntu 15.04 with texi2any (GNU texinfo) 6.0
+	Ubuntu 15.04 with texi2any (GNU texinfo) 5.2
+	Ubuntu 14.10 with texi2any (GNU texinfo) 5.2
+        Ubuntu 13.10 with texi2any (GNU texinfo) 5.2
+        Ubuntu 12.04.3 LTS with texi2any (GNU texinfo) 5.2
+        Ubuntu 10.04 LTS with texi2any (GNU texinfo) 5.2
+        Fedora release 20 (Heisenbug) with texi2any (GNU texinfo) 5.2
+        Fedora release 19 (Spherical Cow) with texi2any (GNU texinfo) 5.2
+        Mint 16 Petra with texi2any (GNU texinfo) 5.2
+	openSUSE 13.1 "Bottle" with texi2any (GNU texinfo) 5.2
