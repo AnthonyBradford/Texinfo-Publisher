@@ -1,0 +1,11 @@
+*~
+*.html
+*.dbk
+*.epub
+*.info
+*.pdf
+*.tar.gz
+*.txt
+*.zip
+bak/
+doc/bak

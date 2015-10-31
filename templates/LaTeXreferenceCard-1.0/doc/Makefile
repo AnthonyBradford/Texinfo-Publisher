@@ -31,6 +31,10 @@ Manual = LaTeXreferenceCard-1.0
 #-D XML -D POSTSCRIPT -D DVI -D INFO -D DOCBOOK -D DJVU
 TEXI2DVI_FLAGS = -D SPLIT -D NOSPLIT -D PDF -D TEXT
 
+# Cascading Style Sheet (CSS).
+# Try from the shell 'make CSS=css/janix-texinfo.css'
+CSS=''
+
 # The EPUB format needs command dbtoepub to be created
 dbtoepub_exists = $(shell { type dbtoepub; } 2>/dev/null)
 ifneq ($(dbtoepub_exists),)
@@ -158,6 +162,7 @@ $(Manual).tar.gz:
 	else \
 		(cd .. && tar -czvf $(Manual).tar.gz $(notdir $(shell pwd)) --exclude '*.eps'); \
 		(mv -f ../$(Manual).tar.gz .); \
+		(cd .. && mkdir -p bak && cp -r $(notdir $(shell pwd)) "bak/$(notdir $(shell pwd))".`date '+%Y%m%d'`); \
 	fi
 
 index.html: $(Manual).texi
@@ -167,6 +172,7 @@ index.html: $(Manual).texi
 		$(CUSTOM) TOP_NODE_UP_URL=.. \
 		$(CUSTOM) $(PRE_BODY_CLOSE) \
 		$(CUSTOM) $(AFTER_BODY_OPEN) \
+		--css-include=$(CSS) \
 		--html $(Manual).texi -o . \
 	)
 
@@ -177,6 +183,7 @@ indexNoSplit.html: $(Manual).texi
 		--no-split --no-headers \
 		$(CUSTOM) $(PRE_BODY_CLOSE) \
 		$(CUSTOM) $(AFTER_BODY_OPEN) \
+		--css-include=$(CSS) \
 		--html $(Manual).texi -o indexNoSplit.html \
 	)
 
@@ -190,6 +197,7 @@ frames: $(Manual).texi
 		$(CUSTOM) TOP_NODE_UP_URL=.. \
 		$(CUSTOM) $(PRE_BODY_CLOSE) \
 		$(CUSTOM) $(AFTER_BODY_OPEN) \
+		--css-include=$(CSS) \
 		--html $(Manual).texi -o .
 	@echo
 	@echo
@@ -286,11 +294,19 @@ else
 	@echo
 endif
 
+.PHONY: plaintext
+plaintext: backup_images
+	@-rm -f images/*.txt
+	$(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual).txt
+	@echo
+	@echo "Plain text created. Images have not been converted to ASCII. See $(Manual).txt"
+	@echo
+
 .PHONY: text
 text: TEXI2DVI_FLAGS += -D TEXT
 text: $(Manual).txt
 $(Manual).txt: $(Manual).texi jpg2txt png2txt
-	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual).txt ; echo ; echo "Plain text created. See $(Manual).txt" ; echo )
+	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual).txt ; echo ; echo "Plain text created. Images converted to ASCII. See $(Manual).txt" ; echo )
 
 .PHONY: zip
 zip: TEXI2DVI_FLAGS += -D ZIP
