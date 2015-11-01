@@ -157,12 +157,12 @@ dist: clean $(Manual).tar.gz
 
 $(Manual).tar.gz:
 	if [ -d ../doc ]; then \
-		(cd ../.. && tar -czvf $(Manual).tar.gz $(Manual) --exclude '*.eps'); \
+		(cd ../.. && tar -czvf $(Manual).tar.gz $(Manual) --exclude '*.eps' --exclude '.git'); \
 		(mv -f ../../$(Manual).tar.gz .); \
 	else \
-		(cd .. && tar -czvf $(Manual).tar.gz $(notdir $(shell pwd)) --exclude '*.eps'); \
+		(cd .. && tar -czvf $(Manual).tar.gz $(notdir $(shell pwd)) --exclude '*.eps' --exclude '.git'); \
 		(mv -f ../$(Manual).tar.gz .); \
-		(cd .. && mkdir -p bak && cp -r $(notdir $(shell pwd)) "bak/$(notdir $(shell pwd))".`date '+%Y%m%d'`); \
+		(cd .. && mkdir -p bak && cp -rf $(notdir $(shell pwd)) "bak/$(notdir $(shell pwd))".`date '+%Y%m%d'`); \
 	fi
 
 index.html: $(Manual).texi

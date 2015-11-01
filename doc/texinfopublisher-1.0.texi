@@ -219,7 +219,8 @@ Texinfo Web Publisher works with the GNU/Linux operating system and Windows/Cygw
 @section Downloading
 @cindex texinfopublisher-@value{VERSION}.tar.gz
 @cindex tar
-Texinfo Web Publisher can be downloaded as a gzipped tar from @url{http://@value{Website}/@value{Directory}/texinfopublisher-@value{VERSION}.tar.gz,texinfopublisher-@value{VERSION}.tar.gz}.
+Texinfo Web Publisher can be downloaded as a gzipped tar from @url{http://@value{Website}/@value{Directory}/texinfopublisher-@value{VERSION}.tar.gz,texinfopublisher-@value{VERSION}.tar.gz} or
+@url{https://sourceforge.net/projects/texinfo-web-publisher/?source=directory,sourceforge.net}.
 
 @section Configuring
 After downloading type the following commands

@@ -143,3 +143,6 @@ Generate HTML using the Cascading Style Sheet (CSS) css/janix-texinfo.css
 
 make CSS=css/bright-colors.css
 Generate HTML using the Cascading Style Sheet (CSS) css/bright-colors.css
+
+To build your own Texinfo Web Publisher Website
+cd doc ; make website

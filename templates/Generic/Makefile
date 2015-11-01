@@ -157,10 +157,10 @@ dist: clean $(Manual).tar.gz
 
 $(Manual).tar.gz:
 	if [ -d ../doc ]; then \
-		(cd ../.. && tar -czvf $(Manual).tar.gz $(Manual) --exclude '*.eps'); \
+		(cd ../.. && tar -czvf $(Manual).tar.gz $(Manual) --exclude '*.eps' --exclude '.git'); \
 		(mv -f ../../$(Manual).tar.gz .); \
 	else \
-		(cd .. && tar -czvf $(Manual).tar.gz $(notdir $(shell pwd)) --exclude '*.eps'); \
+		(cd .. && tar -czvf $(Manual).tar.gz $(notdir $(shell pwd)) --exclude '*.eps' --exclude '.git'); \
 		(mv -f ../$(Manual).tar.gz .); \
 	fi
 
