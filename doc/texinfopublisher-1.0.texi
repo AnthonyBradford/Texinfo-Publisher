@@ -214,7 +214,7 @@ Texinfo Web Publisher provides broken link checking.
 @node Downloading Texinfo Web Publisher
 @chapter Downloading Texinfo Web Publisher
 @cindex Downloading Texinfo Web Publisher
-Texinfo Web Publisher works with the GNU/Linux operating system and Windows/Cygwin environments.
+Texinfo Web Publisher works with the GNU / Linux operating system and Windows / Cygwin environments.
 
 @section Downloading
 @cindex texinfopublisher-@value{VERSION}.tar.gz
@@ -232,7 +232,7 @@ cd texinfopublisher-@value{VERSION}
 ./configure
 @end example
 @cindex autotools
-The configure shell script will give system specific instructions on package installation depending on your system. This is not a autotools package.
+The configure shell script will give system specific instructions on package installation depending on your system. This is @i{not} a autotools package.
 
 @section Configuration issues
 Texinfo Web Publisher will work with recent versions of @command{texi2any}. Texi2any (GNU texinfo) 5.2 or greater is recommended. To find out which version of @command{texi2any} your system is running type
@@ -243,7 +243,7 @@ If your system is running a older version you can install the latest version.
 @xref{installtexi2any,, Texi2any Installation}, for installation instructions.
 @*
 @*
-See @file{README.testing} in the tar package for information on systems Texinfo Web Publisher was tested on.
+See @file{README.testing} in the tar package for information on systems Texinfo Web Publisher has been tested on.
 
 @node Compiling and viewing content
 @chapter Compiling and viewing content
@@ -251,7 +251,7 @@ See @file{README.testing} in the tar package for information on systems Texinfo 
 
 @section Compiling content
 @cindex make
-In the directory @file{texinfopublisher-@value{VERSION}/} type the GNU/Linux command
+In the directory @file{texinfopublisher-@value{VERSION}/} type the GNU / Linux command
 @example
 make
 @end example
@@ -316,9 +316,9 @@ To view content run the following command depending on which system or desktop y
 @item kde-open index.html
 @tab KDE
 @item explorer .
-@tab Windows/Cygwin
+@tab Windows / Cygwin
 @item explorer index.html
-@tab Windows/Cygwin
+@tab Windows / Cygwin
 @end multitable
 @*
 From the main HTML page, index.html, you will see links labeled
@@ -485,7 +485,7 @@ All file content in the directory @file{texinfopublisher-@value{VERSION}/} will 
 @section Publishing to a corporate network
 @cindex Publishing to a corporate network
 @cindex Makefile
-Texinfo Web Publisher can publish to a internal corporate network. The GNU/Linux command @command{cp} can be added to the ``all:'' section of the @file{Makefile}.
+Texinfo Web Publisher can publish to a internal corporate network. The GNU / Linux command @command{cp} can be added to the ``all:'' section of the @file{Makefile}.
 @example
 cp -rfv * <NetworkDrive>
 @end example
@@ -503,12 +503,12 @@ See @command{man rsync} for more information on @command{rsync}.
 @cindex GNU Texinfo Manual
 @cindex Texinfo Manual
 @section GNU Texinfo web resources
-You will have to learn some GNU Texinfo.
+You will have to learn a little GNU Texinfo.
 See the @url{http://www.gnu.org/software/texinfo/manual/texinfo/,GNU Texinfo Manual} and the @url{http://svn.savannah.gnu.org/viewvc/*checkout*/trunk/doc/refcard/txirefcard.pdf?root=texinfo&content-type=text%2Fplain,GNU Texinfo Reference Card}. Don't be alarmed at the size of the GNU Texinfo Manual. Few Texinfo commands are needed to have great looking multi-format content.
 
 @section Basic changes
 @cindex Website.texi
-Inside the directory @file{texinfopublisher-@value{VERSION}/} you will see a file @file{Website.texi}. This is the source file that is compiled every time the command @command{make} is run. The result of the compilation is the building of your content. Change your working directory to @file{texinfopublisher-@value{VERSION}/} and type
+Inside the directory @file{texinfopublisher-@value{VERSION}/} you will see a file @file{Website.texi}. This is the source file that is compiled when the command @command{make} is run. The result of the compilation is the building of your content. Change your working directory to @file{texinfopublisher-@value{VERSION}/} and type
 @example
 make
 @end example
@@ -782,7 +782,7 @@ Produces text in a box.
 @cartouche
 This is a test.
 @end cartouche
-@@cartouche is not translated into the EPUB book format.
+@@cartouche is @i{not} translated into the EPUB book format.
 
 @node Using Texinfo Web Publisher Templates
 @chapter Using Texinfo Web Publisher Templates
@@ -841,7 +841,7 @@ All output formats should be inspected.
 @cindex HTML
 @cindex index.html
 @cindex indexNoSplit.html
-GNU Texinfo generates high quality HTML. Images are not scaled with the @@image command. @xref{imageresize,,Image re-sizing}, to re-size images. Text exceeding page width is not a concern in HTML. The files @file{index.html} and @file{indexNoSplit.html} will have links to other content output formats due to the framework of the Texinfo Web Publisher Templates.
+GNU Texinfo generates high quality HTML. HTML images are @i{not} scaled with the @@image command. @xref{imageresize,,Image re-sizing}, to re-size images. Text exceeding page width is not a concern in HTML. The files @file{index.html} and @file{indexNoSplit.html} will have links to other content output formats due to the framework of the Texinfo Web Publisher Templates.
 
 @section PDF
 @cindex PDF
@@ -1171,7 +1171,7 @@ texi2any --version
 @section Compiling Texinfo Web Publisher documentation
 @cindex documentation
 @cindex TexinfoPublisher.texi
-This Texinfo Web Publisher manual is written in GNU Texinfo. Inside the directory of @file{texinfopublisher-@value{VERSION}/doc/} see a file @file{TexinfoPublisher.texi}. This is the source file that is compiled every time the command @command{make} is run. The result of the compilation is the building of this Texinfo Web Publisher Manual (the manual that your are reading now). Change your working directory to @file{texinfopublisher-@value{VERSION}/doc/} and type
+This Texinfo Web Publisher manual is written in GNU Texinfo. Inside the directory of @file{texinfopublisher-@value{VERSION}/doc/} see a file @file{TexinfoPublisher.texi}. This is the source file that is compiled when the command @command{make} is run. The result of the compilation is the building of this Texinfo Web Publisher Manual (the manual that your are reading now). Change your working directory to @file{texinfopublisher-@value{VERSION}/doc/} and type
 @example
 make
 @end example
@@ -1197,7 +1197,7 @@ See @url{http://AnthonyBradford.com/LaTeXreferenceCard,@LaTeX{} Reference Card C
 
 @subsection OptionMatrix
 @cindex OptionMatrix
-A financial derivatives calculator supporting over 135 models.
+A financial derivatives calculator supporting over 136 models.
 @*
 See @url{http://AnthonyBradford.com/om/,OptionMatrix}.
 
