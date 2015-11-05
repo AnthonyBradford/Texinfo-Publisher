@@ -314,7 +314,7 @@ zip: all $(Manual).zip
 $(Manual).zip: $(Manual).texi
 	@-rm -f $(Manual).aux $(Manual).cp $(Manual).cps $(Manual).fn $(Manual).ky $(Manual).op $(Manual).pg $(Manual).toc $(Manual).tp $(Manual).vr $(Manual).log
 ifneq ($(zip_exists),)
-	@$(if $(findstring -D ZIP,$(TEXI2DVI_FLAGS)), zip -r $(Manual).zip * --exclude *.zip bak/* images/bak/* images/*.eps *.tex *.texi $(Manual).tar.gz configure* )
+	@$(if $(findstring -D ZIP,$(TEXI2DVI_FLAGS)), zip -r $(Manual).zip * --exclude *.zip bak/* images/bak/* $(Manual).tar.gz)
 else
 	@echo "Program \"zip\" missing."
 	@echo "Try: sudo apt-get install zip"
