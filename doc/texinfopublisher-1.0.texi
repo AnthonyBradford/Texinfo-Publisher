@@ -152,6 +152,7 @@ Texinfo Web Publisher also features
 @item Batch image re-sizing
 @item Batch image conversions
 @item Automatic image conversion to EPS
+@item Automatic image conversion to ASCII art
 @item Alternative HTML and PDF styles
 @item Microsoft HTML Helper creation
 @item Automatic backups
@@ -180,7 +181,7 @@ Texinfo Web Publisher is based on GNU Texinfo and is a unrelated project.
 @section GNU Texinfo wrapper
 @cindex index.html
 @cindex Makefile
-Texinfo Web Publisher is a wrapper for GNU Texinfo. Texinfo Web Publisher compiles to many content formats (HTML, PDF, Text, Info, XML, DocBook, DVI, PostScript, EPUB) via a @file{Makefile}. The main HTML file @file{index.html} provides links to these content formats. Content format links in @file{index.html} are controlled by arguments to the command @command{make}.
+Texinfo Web Publisher is a wrapper for GNU Texinfo. Texinfo Web Publisher compiles to many content formats (HTML, PDF, Text, Info, XML, DocBook, DVI, PostScript, EPUB) via a @file{Makefile}. The main HTML file @file{index.html} provides links to all content formats. Content format links in @file{index.html} can be controlled by arguments to the command @command{make}.
 @*
 @*
 @cindex FTP
@@ -188,7 +189,7 @@ Website publishing is executed by a @command{make website} command which runs a 
 
 @section Texinfo Templates
 @cindex templates
-Texinfo Web Publisher provides many Texinfo Template examples to quickly get started in publishing multi-format web content. Each template will compile into a website with matching PDF and plain text content.
+Texinfo Web Publisher provides many Texinfo Template examples to quickly get started in publishing multi-format web content. Each template will compile into a HTML website with matching PDF, EPUB and plain text content.
 @*
 @*
 @cindex JavaScript
@@ -285,12 +286,12 @@ DocBook version of website content.
 @item Website.zip
 @cindex Zip
 @cindex .zip
-Zip file of all HTML, PDF, DocBook, Text, and EPUB files.
+Zip file of all HTML, PDF, DocBook, Text, and EPUB files. All content can be regenerated from this zip file distribution.
 @item Website.tar.gz
 @cindex tar
 @cindex .tar.gz
 @cindex configure
-Compressed source tar file of all content including @file{Makefile}, @file{configure} file and build scripts. All content can be regenerated from this tar file.
+Compressed source tar file of all content including @file{Makefile}, @file{configure} file and build scripts. All content can be regenerated from this tar file distribution.
 @end table
 @cindex EPS
 @cindex .eps
@@ -402,7 +403,7 @@ This will create the file Website.hhp which can be made into a
 Microsoft HTML Helper file (.chm) with the Microsoft utility hhc.exe. Microsoft HTML Helper files (.chm) only run under the Microsoft Windows operating system.
 @item make zip
 @cindex make zip
-Creates a .zip file of the current compiled output formats.
+Creates a .zip file distribution including @file{Makefile} and build scripts. All content can be regenerated from this tar file.
 @item make clean
 @cindex make clean
 Clean all compiled content. The source files of the content will not be deleted.
@@ -867,7 +868,7 @@ EPUB (.epub) is not generated directly from GNU Texinfo. Texinfo is converted in
 
 @subsection EPUB line break issues
 @cindex @@*
-The @@* commands are not passed to EPUB output causing some text not to have line breaks. One solution is to globally replace all references of @@* to:
+The @@* commands are not passed to EPUB output causing some text not to have line breaks. One solution is to globally replace all references of @@* to the next 4 lines:
 @example
 @@*
 @@ifdocbook
@@ -877,7 +878,7 @@ The @@* commands are not passed to EPUB output causing some text not to have lin
 
 @subsection EPUB double index issues
 @cindex @@ifdocbook
-In the table of contents two link references to the ending index are generated. The program, @url{http://www.google.com/search?q=sigil+EPUB,Sigil - The EPUB Editor}, can be used to remove one of the index references.
+In the table of contents two link references to the ending index can be generated with some versions of Texinfo. The program, @url{http://www.google.com/search?q=sigil+EPUB,Sigil - The EPUB Editor}, can be used to remove one of the index references.
 @*
 @*
 @cindex yum
@@ -931,7 +932,7 @@ Publish to a website with the @command{make website} command or un-zip the @file
 @cindex a2x
 @cindex hhc.exe
 @cindex @@ifdocbook
-Microsoft HTML Helper (.chm) is not generated directly from Texinfo. Texinfo is converted into DocBook via @command{makeinfo}/@command{texi2any}, then converted into Microsoft HTML Helper via @command{a2x} and @command{hhc.exe}. The @@* commands are not passed to Microsoft HTML Helper files causing some text not to have line breaks. One solution is to globally replace all references of @@* to:
+Microsoft HTML Helper (.chm) is not generated directly from Texinfo. Texinfo is converted into DocBook via @command{makeinfo}/@command{texi2any}, then converted into Microsoft HTML Helper via @command{a2x} and @command{hhc.exe}. With some versions of Texinfo the @@* commands are not passed to Microsoft HTML Helper files causing some text not to have line breaks. One solution is to globally replace all references of @@* to the next 4 lines:
 @example
 @@*
 @@ifdocbook
