@@ -144,5 +144,11 @@ Generate HTML using the Cascading Style Sheet (CSS) css/janix-texinfo.css
 make CSS=css/bright-colors.css
 Generate HTML using the Cascading Style Sheet (CSS) css/bright-colors.css
 
+make CSS=css/datamash-texinfo.css
+Generate HTML using the Cascading Style Sheet (CSS) css/datamash-texinfo.css
+
+make CSS=css/infodoc-styles.css
+Generate HTML using the Cascading Style Sheet (CSS) css/infodoc-styles.css
+
 To build your own Texinfo Web Publisher Website
 cd doc ; make website
