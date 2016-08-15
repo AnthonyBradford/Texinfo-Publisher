@@ -21,11 +21,11 @@
 <br>
 @end ifset
 @ifset SPLIT
-<a href="index.html">Split HTML content of this website</a>
+<a href="index.html">HTML content of this website</a>
 <br>
 @end ifset
 @ifset NOSPLIT
-<a href="indexNoSplit.html">Non-Split HTML content of this website</a>
+<a href="indexNoSplit.html">Single-page HTML content of this website</a>
 <br>
 @end ifset
 @ifset TEXT

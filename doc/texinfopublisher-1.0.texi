@@ -70,11 +70,11 @@ Copyright @copyright{}  @var{2012}  @var{Anthony Bradford}.
 <br>
 @end ifset
 @ifset SPLIT
-<a href="index.html">Split HTML version of this manual</a>
+<a href="index.html">HTML version of this manual</a>
 <br>
 @end ifset
 @ifset NOSPLIT
-<a href="indexNoSplit.html">Non-Split HTML version of this manual</a>
+<a href="indexNoSplit.html">Single-page HTML version of this manual</a>
 <br>
 @end ifset
 @ifset ZIP

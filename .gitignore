@@ -7,5 +7,10 @@
 *.tar.gz
 *.txt
 *.zip
+*.aux
+*.dvi
+*.log
+*.ps
+*.out
 bak/
 doc/bak

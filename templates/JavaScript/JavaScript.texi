@@ -56,11 +56,11 @@ This is a Texinfo Website Template. Copyright @copyright{} 2012.
 <br>
 @end ifset
 @ifset SPLIT
-<a href="index.html">Split HTML version of this website</a>
+<a href="index.html">HTML version of this website</a>
 <br>
 @end ifset
 @ifset NOSPLIT
-<a href="indexNoSplit.html">Non-Split HTML version of this website</a>
+<a href="indexNoSplit.html">Single-page HTML version of this website</a>
 <br>
 @end ifset
 @ifset TEXT
