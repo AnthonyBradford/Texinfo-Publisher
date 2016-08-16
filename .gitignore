@@ -12,5 +12,14 @@
 *.log
 *.ps
 *.out
+*.cp
+*.cps
+*.fn
+*.ky
+*.op
+*.pg
+*.toc
+*.tp
+*.vr
 bak/
 doc/bak
