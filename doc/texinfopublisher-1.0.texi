@@ -164,8 +164,8 @@ Texinfo Web Publisher is a low maintenance solution for publishing websites with
 @ifnothtml
 The Texinfo Web Publisher manual was published with Texinfo Web Publisher and is available in many formats.
 @itemize
-@item @url{http://@value{Website}/@value{Directory}/index.html,Split HTML version of this manual}
-@item @url{http://@value{Website}/@value{Directory}/indexNoSplit.html,Non-Split HTML version of this manual}
+@item @url{http://@value{Website}/@value{Directory}/index.html,HTML version of this manual}
+@item @url{http://@value{Website}/@value{Directory}/indexNoSplit.html,Single-page HTML version of this manual}
 @item @url{http://@value{Website}/@value{Directory}/@value{Manual}.zip,HTML zip package of this manual}
 @item @url{http://@value{Website}/@value{Directory}/@value{Manual}.txt,Text version of this manual}
 @item @url{http://@value{Website}/@value{Directory}/@value{Manual}.dbk,DocBook version of this manual}
@@ -326,8 +326,8 @@ From the main HTML page, index.html, you will see links labeled
 @cindex tar
 @itemize
 @item PDF content of this website
-@item Split HTML version of this website
-@item Non-Split HTML version of this website
+@item HTML version of this website
+@item Single-page HTML version of this website
 @item Text content of this website
 @item EPUB content of this website
 @item HTML zip package of this website
@@ -337,9 +337,10 @@ Click on these links to view the formats. Content between all formats is matchin
 @*
 @*
 @cindex Split HTML
+@cindex Single-page HTML
 @cindex Non-split HTML
 @cindex HTML (split vs. non-split)
-Split HTML indicates Texinfo source is compiled to multiple HTML pages. Non-split HTML indicates Texinfo source is compiled to one large HTML page.
+HTML or split HTML indicates Texinfo source is compiled to multiple HTML pages. Single-page (Non-split) HTML indicates Texinfo source is compiled to one large HTML page.
 
 @section More building options
 @table @samp
