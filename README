@@ -150,5 +150,8 @@ Generate HTML using the Cascading Style Sheet (CSS) css/datamash-texinfo.css
 make CSS=css/infodoc-styles.css
 Generate HTML using the Cascading Style Sheet (CSS) css/infodoc-styles.css
 
+make CSS=css/sirgazil-document-1.0.1.css
+Generate HTML using the Cascading Style Sheet (CSS) css/sirgazil-document-1.0.1.css
+
 To build your own Texinfo Web Publisher Website
 cd doc ; make website
