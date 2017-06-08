@@ -132,7 +132,7 @@ all: $(Manual).tar.gz index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu 
 	@echo "Publish to a network drive by adding"
 	@echo "\"cp -rfv * <NetworkDrive>\" to the Makefile."
 	@echo 
-	@echo "To publish via ftp type:"
+	@echo "To publish via FTP type:"
 	@echo "               make website"
 	@echo
 	@echo "To view type:"
