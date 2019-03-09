@@ -35,13 +35,6 @@ Website.zip  - Zip files of HTML, PDF, .txt and EPUB files. This Zip file can
               be un-zipped in a public_html web server space to make a website.
 Website.tar.gz - Gzipped tar file to recreate all content.
 
-Run the command 'make website'.
-This will publish: 
-
-index.html and associated HTML files, Website.pdf, Website.txt, Website.zip, 
-Website.epub, images directory and files directory to a website of
-your choice.
-
 Individual builds
 -----------------
 
