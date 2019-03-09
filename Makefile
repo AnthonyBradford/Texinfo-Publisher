@@ -1,4 +1,4 @@
-# Texinfo Web Publisher.
+# Texinfo Publisher.
 # Copyright (C) Anthony Bradford 2012.
 
 # This program is free software: you can redistribute it and/or modify
@@ -78,8 +78,20 @@ EPS_FILES := $(foreach dir,$(IMAGES_DIR),$(FIND_EPS_FILES))
 FIND_PNG_FILES = $(basename $(wildcard $(IMAGES_DIR)/*.png))
 PNG_FILES := $(foreach dir,$(IMAGES_DIR),$(FIND_PNG_FILES))
 
+FIND_PNG_FILES_UPPERCASE = $(basename $(wildcard $(IMAGES_DIR)/*.PNG))
+PNG_FILES_UPPERCASE := $(foreach dir,$(IMAGES_DIR),$(FIND_PNG_FILES_UPPERCASE))
+
 FIND_JPG_FILES = $(basename $(wildcard $(IMAGES_DIR)/*.jpg))
 JPG_FILES := $(foreach dir,$(IMAGES_DIR),$(FIND_JPG_FILES))
+
+FIND_JPG_FILES_UPPERCASE = $(basename $(wildcard $(IMAGES_DIR)/*.JPG))
+JPG_FILES_UPPERCASE := $(foreach dir,$(IMAGES_DIR),$(FIND_JPG_FILES_UPPERCASE))
+
+FIND_JPEG_FILES_UPPERCASE = $(basename $(wildcard $(IMAGES_DIR)/*.JPEG))
+JPEG_FILES_UPPERCASE := $(foreach dir,$(IMAGES_DIR),$(FIND_JPEG_FILES_UPPERCASE))
+
+FIND_JPEG_FILES_LOWERCASE = $(basename $(wildcard $(IMAGES_DIR)/*.jpeg))
+JPEG_FILES_LOWERCASE := $(foreach dir,$(IMAGES_DIR),$(FIND_JPEG_FILES_LOWERCASE))
 
 FIND_GIF_FILES = $(basename $(wildcard $(IMAGES_DIR)/*.gif))
 GIF_FILES := $(foreach dir,$(IMAGES_DIR),$(FIND_GIF_FILES))
@@ -116,10 +128,10 @@ else
 	CUSTOM = -U CUST
 endif
 
-CLEAN_OBJECTS = *.html *.zip *.pdf *.djvu *.djv *.aux *.cp *.cps *.fn *.ky *.log *.op *.pg *.toc *.tp *.vr *.txt *.xml *.dbk *.hhc *.hhk *.hhp *.htmlhelp/docbook-xsl.css *.htmlhelp/*html *.htmlhelp/images/* *.epub *.proc *.dvi *.ps *.info *.info-* *.tar.gz *~
+CLEAN_OBJECTS = *.html *.zip *.pdf *.djvu *.djv *.aux *.cp *.cps *.fn *.ky *.log *.op *.pg *.toc *.tp *.vr *.txt *.xml *.dbk *.hhc *.hhk *.hhp *.htmlhelp/docbook-xsl.css *.htmlhelp/*html *.htmlhelp/images/* *.epub *.proc *.dvi *.ps *.info *.info-* *.tar.gz *~ textsplit/*
 
 .PHONY: all
-all: $(Manual).tar.gz index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip
+all: $(Manual).tar.gz index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual).txt textsplit/$(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip
 	if [ ! -d files ]; then \
 		(mkdir files ); \
 	fi;
@@ -128,12 +140,6 @@ all: $(Manual).tar.gz index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu 
 	fi;
 	@cp $(Manual).texi bak/"$(Manual).texi.`date '+%Y%m%d'`"
 	@cp Makefile bak/"Makefile.`date '+%Y%m%d'`"
-	@echo
-	@echo "Publish to a network drive by adding"
-	@echo "\"cp -rfv * <NetworkDrive>\" to the Makefile."
-	@echo 
-	@echo "To publish via FTP type:"
-	@echo "               make website"
 	@echo
 	@echo "To view type:"
 	@echo "               firefox index.html  (UNIX/Linux)"
@@ -157,12 +163,11 @@ dist: clean $(Manual).tar.gz
 
 $(Manual).tar.gz:
 	if [ -d ../doc ]; then \
-		(cd ../.. && tar -czvf $(Manual).tar.gz $(Manual) --exclude '*.eps' --exclude '.git'); \
+		(cd ../.. && tar --exclude '*.eps' --exclude '.git' -czvf $(Manual).tar.gz $(Manual) ); \
 		(mv -f ../../$(Manual).tar.gz .); \
 	else \
-		(cd .. && tar -czvf $(Manual).tar.gz $(notdir $(shell pwd)) --exclude '*.eps' --exclude '.git'); \
+		(cd .. && tar --exclude '*.eps' --exclude '.git' -czvf $(Manual).tar.gz $(notdir $(shell pwd)) ); \
 		(mv -f ../$(Manual).tar.gz .); \
-		(cd .. && mkdir -p bak && cp -rf $(notdir $(shell pwd)) "bak/$(notdir $(shell pwd))".`date '+%Y%m%d'`); \
 	fi
 
 index.html: $(Manual).texi
@@ -299,7 +304,15 @@ plaintext: backup_images
 	@-rm -f images/*.txt
 	$(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual).txt
 	@echo
-	@echo "Plain text created. Images have not been converted to ASCII. See $(Manual).txt"
+	@echo "Plain text created. Images have NOT been converted to ASCII. See $(Manual).txt"
+	@echo
+
+.PHONY: plaintextsplit
+plaintextsplit: backup_images
+	@-rm -f images/*.txt
+	$(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o textsplit
+	@echo
+	@echo "Split plain text created. Images have NOT been converted to ASCII. See directory textsplit"
 	@echo
 
 .PHONY: text
@@ -308,13 +321,19 @@ text: $(Manual).txt
 $(Manual).txt: $(Manual).texi jpg2txt png2txt
 	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual).txt ; echo ; echo "Plain text created. Images converted to ASCII. See $(Manual).txt" ; echo )
 
+.PHONY: textsplit
+textsplit: TEXI2DVI_FLAGS += -D TEXT
+textsplit: textsplit/$(Manual).txt
+textsplit/$(Manual).txt: $(Manual).texi jpg2txt png2txt
+	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o textsplit ; echo ; echo "Split plain text created. Images converted to ASCII. See directory textsplit" ; echo )
+
 .PHONY: zip
 zip: TEXI2DVI_FLAGS += -D ZIP
 zip: all $(Manual).zip
 $(Manual).zip: $(Manual).texi
 	@-rm -f $(Manual).aux $(Manual).cp $(Manual).cps $(Manual).fn $(Manual).ky $(Manual).op $(Manual).pg $(Manual).toc $(Manual).tp $(Manual).vr $(Manual).log
 ifneq ($(zip_exists),)
-	@$(if $(findstring -D ZIP,$(TEXI2DVI_FLAGS)), zip -r $(Manual).zip * --exclude *.zip bak/* images/bak/* $(Manual).tar.gz)
+	@$(if $(findstring -D ZIP,$(TEXI2DVI_FLAGS)), zip -r $(Manual).zip * --exclude *.eps *.zip bak/* images/bak/* $(Manual).tar.gz)
 else
 	@echo "Program \"zip\" missing."
 	@echo "Try: sudo apt-get install zip"
@@ -394,35 +413,49 @@ else
 	@echo "Try: sudo apt-get install style"
 endif
 
-# Publish content to website
-.PHONY: website
-website:
-	scripts/push_to_web.sh
+.PHONY: resize
+resize: resizejpg resizepng
 
-# Resize images for HTML publishing
+# Resize JPG images for HTML publishing
 # Backup all ./images to ./images/bak
 # resize all JPEG images in ./images to 640x480
+# and 320x240
 .PHONY: resizejpg
-resizejpg: backup_images
+resizejpg: backup_images jpgLowercase
 ifneq ($(convert_exists),)
-	find ./images/ -maxdepth 1 -name "*.jpg" -type f -exec convert {} -resize 640x480 {} \;
+	@-rm -f images/*640x480*jpg
+	@-rm -f images/*320x240*jpg
+	for file in $(basename $(wildcard images/*.jpg)) ; do \
+		if [ -e "$$file.jpg" ]; then \
+			convert $$file.jpg -resize 640x480 $$file-640x480.jpg; \
+			convert $$file.jpg -resize 320x240 $$file-320x240.jpg; \
+		fi; \
+	done
 	@echo
-	@echo All JPEGs resized to 640x480 for HTML display
+	@echo All JPEGs resized to 640x480 and 320x240 for HTML display
 	@echo
 else
 	@echo "Program \"convert\" missing."
 	@echo "Try: sudo apt-get install convert"
 endif
 
-# Resize images for HTML publishing
+# Resize PNG images for HTML publishing
 # Backup all ./images to ./images/bak
 # resize all PNG images in ./images to 640x480
+# and 320x240
 .PHONY: resizepng
-resizepng: backup_images
+resizepng: backup_images pngLowercase
 ifneq ($(convert_exists),)
-	find ./images/ -maxdepth 1 -name "*.png" -type f -exec convert {} -resize 640x480 {} \;
+	@-rm -f images/*640x480*png
+	@-rm -f images/*320x240*png
+	for file in $(basename $(wildcard images/*.png)) ; do \
+		if [ -e "$$file.png" ]; then \
+			convert $$file.png -resize 640x480 $$file-640x480.png; \
+			convert $$file.png -resize 320x240 $$file-320x240.png; \
+		fi; \
+	done
 	@echo
-	@echo All PNGs resized to 640x480 for HTML display
+	@echo All PNGs resized to 640x480 and 320x240 for HTML display
 	@echo
 else
 	@echo "Program \"convert\" missing."
@@ -440,8 +473,46 @@ backup_images:
 	find ./images/ -maxdepth 1 -type f -exec cp {} ./images/bak \;
 	@echo All images in ./images backed up to ./images/bak
 
+.PHONY: pngLowercase
+pngLowercase:
+	for file in $(PNG_FILES_UPPERCASE); do \
+		if [ -e "$$file.png" ]; then \
+			echo "$$file.png exists"; \
+		else \
+			mv $$file.PNG $$file.png; \
+			echo "Renamed $$file.PNG to $$file.png"; \
+		fi; \
+	done
+
+.PHONY: jpgLowercase
+jpgLowercase:
+	for file in $(JPG_FILES_UPPERCASE); do \
+		if [ -e "$$file.jpg" ]; then \
+			echo "$$file.jpg exists"; \
+		else \
+			mv $$file.JPG $$file.jpg; \
+			echo "Renamed $$file.JPG to $$file.jpg"; \
+		fi; \
+	done
+	for file in $(JPEG_FILES_UPPERCASE); do \
+		if [ -e "$$file.jpg" ]; then \
+			echo "$$file.jpg exists"; \
+		else \
+			mv $$file.JPEG $$file.jpg; \
+			echo "Renamed $$file.JPEG to $$file.jpg"; \
+		fi; \
+	done
+	for file in $(JPEG_FILES_LOWERCASE); do \
+		if [ -e "$$file.jpg" ]; then \
+			echo "$$file.jpg exists"; \
+		else \
+			mv $$file.jpeg $$file.jpg; \
+			echo "Renamed $$file.jpeg to $$file.jpg"; \
+		fi; \
+	done
+
 .PHONY: png2eps
-png2eps:
+png2eps: pngLowercase
 ifneq ($(convert_exists),)
 	for file in $(PNG_FILES); do \
 		if [ -e "$$file.eps" ]; then \
@@ -561,7 +632,7 @@ else
 endif
 
 .PHONY: jpg2png
-jpg2png:
+jpg2png: jpgLowercase
 ifneq ($(convert_exists),)
 	for file in $(JPG_FILES); do \
 		if [ -e "$$file.png" ]; then \
@@ -621,7 +692,7 @@ else
 endif
 
 .PHONY: jpg2txt
-jpg2txt:
+jpg2txt: jpgLowercase
 ifneq ($(jp2a_exists),)
 	for file in $(JPG_FILES); do \
 		if [ -e "$$file.txt" ]; then \
