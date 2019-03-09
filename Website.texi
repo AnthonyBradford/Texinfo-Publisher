@@ -2,7 +2,7 @@
 @c %**start of header
 @set Manual Website
 @setfilename @value{Manual}.info
-@settitle Texinfo Templates
+@settitle Texinfo Template
 
 @c Define a new index for options.
 @defcodeindex op
@@ -67,6 +67,8 @@ This is a Texinfo Template Website. Copyright @copyright{} 2012.
 @cindex Text
 @cindex Plain text
 <a href="@value{Manual}.txt">Text version of this website</a> 
+<br>
+<a href="textsplit">Split text version of this website</a> 
 <br>
 @end ifset
 @ifset EPUB
