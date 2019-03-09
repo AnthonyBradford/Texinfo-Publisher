@@ -128,10 +128,10 @@ else
 	CUSTOM = -U CUST
 endif
 
-CLEAN_OBJECTS = *.html *.zip *.pdf *.djvu *.djv *.aux *.cp *.cps *.fn *.ky *.log *.op *.pg *.toc *.tp *.vr *.txt *.xml *.dbk *.hhc *.hhk *.hhp *.htmlhelp/docbook-xsl.css *.htmlhelp/*html *.htmlhelp/images/* *.epub *.proc *.dvi *.ps *.info *.info-* *.tar.gz *~ textsplit/*
+CLEAN_OBJECTS = *.html *.zip *.pdf *.djvu *.djv *.aux *.cp *.cps *.fn *.ky *.log *.op *.pg *.toc *.tp *.vr *.txt *.xml *.dbk *.hhc *.hhk *.hhp *.htmlhelp/docbook-xsl.css *.htmlhelp/*html *.htmlhelp/images/* *.epub *.proc *.dvi *.ps *.info *.info-* *.tar.gz *~ textsplit/* plaintextsplit/*
 
 .PHONY: all
-all: $(Manual).tar.gz index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual).txt textsplit/$(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip
+all: $(Manual).tar.gz index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual)_PlainText.txt $(Manual).txt textsplit/$(Manual).txt plaintextsplit/$(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip
 	if [ ! -d files ]; then \
 		(mkdir files ); \
 	fi;
@@ -300,20 +300,21 @@ else
 endif
 
 .PHONY: plaintext
-plaintext: backup_images
+plaintext: TEXI2DVI_FLAGS += -D TEXT
+plaintext: $(Manual)_PlainText.txt
+$(Manual)_PlainText.txt: $(Manual).texi
 	@-rm -f images/*.txt
-	$(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual).txt
+	$(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual)_PlainText.txt
 	@echo
 	@echo "Plain text created. Images have NOT been converted to ASCII. See $(Manual).txt"
 	@echo
 
 .PHONY: plaintextsplit
-plaintextsplit: backup_images
+plaintextsplit: TEXI2DVI_FLAGS += -D TEXT
+plaintextsplit: plaintextsplit/$(Manual).txt
+plaintextsplit/$(Manual).txt: $(Manual).texi
 	@-rm -f images/*.txt
-	$(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o textsplit
-	@echo
-	@echo "Split plain text created. Images have NOT been converted to ASCII. See directory textsplit"
-	@echo
+	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o plaintextsplit ; echo ; echo "Split plain text created. Images have NOT been converted to ASCII. See directory plaintextsplit" ; echo )
 
 .PHONY: text
 text: TEXI2DVI_FLAGS += -D TEXT
