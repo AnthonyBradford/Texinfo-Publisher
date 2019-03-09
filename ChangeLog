@@ -1,3 +1,8 @@
 2012-01-01  Anthony G. Bradford  <anthony_bradford@yahoo.com>
 
-	* Texinfo Web Publisher 1.0 Release
+	* Texinfo Publisher 1.1 Release
+	Added Makefile targets plaintextsplit and textsplit
+	Rename file with .JPG to .jpg
+	Rename file with .PNG to .png
+
+	* Texinfo Publisher 1.0 Release
