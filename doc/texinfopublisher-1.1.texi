@@ -113,7 +113,6 @@ Copyright @copyright{}  @var{2012}  @var{Anthony Bradford}.
 * Downloading Texinfo Publisher::
 * Compiling and viewing content::
 * Learning GNU Texinfo::
-* Using Texinfo Publisher Templates::
 * Output formats::
 * Images::
 * Language analysis::
@@ -178,19 +177,6 @@ Texinfo Publisher is based on GNU Texinfo and is a unrelated project.
 @cindex index.html
 @cindex Makefile
 Texinfo Publisher is a wrapper for GNU Texinfo. Texinfo Publisher compiles to many content formats (HTML, PDF, Text, Info, XML, DocBook, DVI, PostScript, EPUB) via a @file{Makefile}. The main HTML file @file{index.html} provides links to all content formats. Content format links in @file{index.html} can be controlled by arguments to the command @command{make}.
-
-@section Texinfo Templates
-@cindex templates
-Texinfo Publisher provides many Texinfo Template examples to quickly get started in publishing multi-format web content. Each template will compile into a HTML website with matching PDF, EPUB and plain text content.
-@*
-@*
-@cindex JavaScript
-@cindex Java Applet
-Templates include: Multi-chapter, Unnumbered multi-chapter, PDFs with title pages, PDFs without title pages, Document with pictures, Embedding JavaScript and Java Applet examples.
-@*
-@*
-@cindex index.html
-Compiled templates provide links in the file @file{index.html} to non-HTML output formats.
 
 @section Image processing
 Texinfo Publisher provides automatic image conversion from JPG, PNG and GIF to the EPS format. The EPS image format is needed for PostScript and DVI output.
@@ -747,54 +733,6 @@ This is a test.
 @end cartouche
 @@cartouche is @i{not} translated into the EPUB book format.
 
-@node Using Texinfo Publisher Templates
-@chapter Using Texinfo Publisher Templates
-@cindex Using Texinfo Publisher Templates
-@cindex Templates
-
-@section Compiling the Templates
-To compile the Templates type in the directory @file{texinfopublisher-@value{VERSION}/templates}
-@example
-make
-@end example
-Each template example has it own directory. All the templates will build producing matching website/PDF and plain text content.
-
-@section Choosing a template
-In the directory @file{texinfopublisher-@value{VERSION}/templates/} see the following template directories
-@table @samp
-@item Generic
-@cindex Generic
-This is a multi-chapter template example. Producing matching Website/PDF.
-@item GenericUnnumbered
-@cindex GenericUnnumbered
-This is the same as the Generic but lacks chapter numbers.
-@item GenericNoPDFCoverPage
-@cindex GenericNoPDFCoverPage
-This is a multi-chapter template that produces a Website/PDF with no cover page but has regular HTML layout.
-@item JavaScript
-@cindex JavaScript
-This is a Texinfo example with a embedded JavaScript. The JavaScript only runs from the HTML content.
-@item JavaApplet
-@cindex Java Applet
-This is a Texinfo example with a embedded Java Applet. The Java Applet only runs from the HTML content.
-@item PictureDocument
-@cindex Picture Document
-@cindex Document Pictures
-This is a Texinfo example Website/PDF with several pictures.
-@item LaTeXreferenceCard
-@cindex @LaTeX{} reference card
-This is not a Texinfo template but rather a @LaTeX{} reference card template. @LaTeX{} is needed for the detailed layout of a three column reference card. Use this reference card template example to make a reference card for your project. A PDF reference card can be placed in the directory @file{files/} of a project. @xref{filesDirectory,,files\ directory}.
-@end table
-@cindex @@title
-@cindex @@settitle
-Experiment and add content to the chapters. Globally search and replace the email address anthony_bradford@@@@yahoo.com with your email address. Try changing the display name of the document by changing the @@settitle and @@title commands. Type @command{make} on the command line. The @file{Makefile} is verbose and will give instructions on how to view the generated content (HTML, PDF, EPUB ...etc).
-@*
-@*
-Feel free to use any of the templates as the basis of a project.
-@*
-@*
-Refer to the @url{http://www.gnu.org/software/texinfo/manual/texinfo/,GNU Texinfo Manual} and the @url{http://svn.savannah.gnu.org/viewvc/*checkout*/trunk/doc/refcard/txirefcard.pdf?root=texinfo&content-type=text%2Fplain,GNU Texinfo Reference Card} to learn more about GNU Texinfo.
-
 @node Output formats
 @chapter Output formats
 @cindex Output formats
@@ -804,7 +742,7 @@ All output formats should be inspected.
 @cindex HTML
 @cindex index.html
 @cindex indexNoSplit.html
-GNU Texinfo generates high quality HTML. HTML images are @i{not} scaled with the @@image command. @xref{imageresize,,Image re-sizing}, to re-size images. Text exceeding page width is not a concern in HTML. The files @file{index.html} and @file{indexNoSplit.html} will have links to other content output formats due to the framework of the Texinfo Publisher Templates.
+GNU Texinfo generates high quality HTML. HTML images are @i{not} scaled with the @@image command. @xref{imageresize,,Image re-sizing}, to re-size images. Text exceeding page width is not a concern in HTML. The files @file{index.html} and @file{indexNoSplit.html} will have links to other content output formats due to the framework of the Texinfo Publisher.
 
 @section PDF
 @cindex PDF
@@ -1143,26 +1081,6 @@ If you would like to publish the Texinfo Publisher Manual in multiple formats to
 @example
 make website
 @end example
-
-@section More projects
-
-@subsection @LaTeX{} Web Publishing Project
-@cindex @LaTeX{} Web Publisher
-A multi-format web publishing system with FTP deployment capabilities based on @LaTeX{}.
-@*
-See @url{http://AnthonyBradford.com/LaTeXpublisher,@LaTeX{} Web Publisher}.
-
-@subsection @LaTeX{} Reference Card Creator
-@cindex @LaTeX{} Reference Card Creator
-A @file{Makefile} based build system for creating reference cards from a @LaTeX{} source.
-@*
-See @url{http://AnthonyBradford.com/LaTeXreferenceCard,@LaTeX{} Reference Card Creator}.
-
-@subsection OptionMatrix
-@cindex OptionMatrix
-A financial derivatives calculator supporting over 136 models.
-@*
-See @url{http://AnthonyBradford.com/om/,OptionMatrix}.
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
