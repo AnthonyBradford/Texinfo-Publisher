@@ -16,7 +16,7 @@
 This is a template for a manual. Copyright @copyright{} 2012.
 
 @quotation
-All right reserved.
+All rights reserved.
 @end quotation
 @end copying
 
@@ -48,15 +48,17 @@ This is a Texinfo Template Website. Copyright @copyright{} 2012.
 
 @html
 @ifset PDF
-<a href="@value{Manual}.pdf">PDF content of this website</a>
+<a href="@value{Manual}.pdf">PDF version of this website</a>
 <br>
 @end ifset
 @ifset DJVU
-<a href="@value{Manual}.djvu">DjVu content of this website</a>
+<a href="@value{Manual}.djvu">DjVu version of this website</a>
 <br>
 @end ifset
 @ifset SPLIT
 <a href="index.html">HTML version of this website</a>
+<br>
+<a href="@value{Manual}_frame.html">Framed HTML version of this website</a>
 <br>
 @end ifset
 @ifset NOSPLIT
@@ -65,9 +67,9 @@ This is a Texinfo Template Website. Copyright @copyright{} 2012.
 @end ifset
 @ifset TEXT
 @cindex Text
-@cindex Plain text
 <a href="@value{Manual}.txt">Text version of this website</a> 
 <br>
+@cindex Plain text
 <a href="@value{Manual}_PlainText.txt">Plain text version of this website</a> 
 <br>
 <a href="textsplit">Split text version of this website</a> 
@@ -77,12 +79,12 @@ This is a Texinfo Template Website. Copyright @copyright{} 2012.
 @end ifset
 @ifset EPUB
 @cindex EPUB
-<a href="@value{Manual}.epub">EPUB content of this website</a> 
+<a href="@value{Manual}.epub">EPUB version of this website</a> 
 <br>
 @end ifset
 @ifset POSTSCRIPT
 @cindex PostScript
-<a href="@value{Manual}.ps">PostScript content of this website</a> 
+<a href="@value{Manual}.ps">PostScript version of this website</a> 
 <br>
 @end ifset
 @ifset DVI
