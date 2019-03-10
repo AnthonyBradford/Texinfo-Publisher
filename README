@@ -1,4 +1,4 @@
-Texinfo Web Publisher.
+Texinfo Publisher.
 Copyright (C)  2012  Anthony G. Bradford.
 
 This program is free software: you can redistribute it and/or modify
@@ -74,6 +74,20 @@ Run the command 'make text'.
 Builds: Website.txt
 Images are converted to ASCII.
 
+Run the command 'make plaintext'.
+Builds: Website_PlainText.txt
+Images are not converted to ASCII.
+
+Run the command 'make textsplit'.
+Builds directory textsplit
+Chapters are split into separate files.
+Images are converted to ASCII.
+
+Run the command 'make plaintextsplit'.
+Builds directory plaintextsplit
+Chapters are split into separate files.
+Images are not converted to ASCII.
+
 Run the command 'make info'.
 Builds: Website.info
 
@@ -84,6 +98,10 @@ Microsoft HTML Helper file (.chm) with the utility hhc.exe
 Run the command 'make distclean ; make zip'
 This will build the compressed Website.zip
 Backup directories are deleted by distclean.
+
+Run the command 'make resize'.
+This will resize JPG and PNG images in directory images to 960x576,
+640x480 and 320x240 sizes.
 
 Run the command 'make clean'.
 To delete all Makefile generated files. All source files are kept.
@@ -145,6 +163,3 @@ Generate HTML using the Cascading Style Sheet (CSS) css/infodoc-styles.css
 
 make CSS=css/sirgazil-document-1.0.1.css
 Generate HTML using the Cascading Style Sheet (CSS) css/sirgazil-document-1.0.1.css
-
-To build your own Texinfo Web Publisher Website
-cd doc ; make website
