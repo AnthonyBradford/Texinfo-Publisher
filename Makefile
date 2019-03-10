@@ -415,25 +415,27 @@ else
 endif
 
 .PHONY: resize
-resize: resizejpg resizepng
+resize: backup_images resizejpg resizepng
 
 # Resize JPG images for HTML publishing
 # Backup all ./images to ./images/bak
-# resize all JPEG images in ./images to 640x480
-# and 320x240
+# resize all JPEG images in ./images to 960x576,
+# 640x480 and 320x240
 .PHONY: resizejpg
-resizejpg: backup_images jpgLowercase
+resizejpg: jpgLowercase
 ifneq ($(convert_exists),)
+	@-rm -f images/*960x576*jpg
 	@-rm -f images/*640x480*jpg
 	@-rm -f images/*320x240*jpg
 	for file in $(basename $(wildcard images/*.jpg)) ; do \
 		if [ -e "$$file.jpg" ]; then \
+			convert $$file.jpg -resize 960x576 $$file-960x576.jpg; \
 			convert $$file.jpg -resize 640x480 $$file-640x480.jpg; \
 			convert $$file.jpg -resize 320x240 $$file-320x240.jpg; \
 		fi; \
 	done
 	@echo
-	@echo All JPEGs resized to 640x480 and 320x240 for HTML display
+	@echo All JPEGs resized to 960x576, 640x480 and 320x240 for HTML display
 	@echo
 else
 	@echo "Program \"convert\" missing."
@@ -442,21 +444,23 @@ endif
 
 # Resize PNG images for HTML publishing
 # Backup all ./images to ./images/bak
-# resize all PNG images in ./images to 640x480
-# and 320x240
+# resize all PNG images in ./images to 960x576,
+# 640x480 and 320x240
 .PHONY: resizepng
-resizepng: backup_images pngLowercase
+resizepng: pngLowercase
 ifneq ($(convert_exists),)
+	@-rm -f images/*960x576*png
 	@-rm -f images/*640x480*png
 	@-rm -f images/*320x240*png
 	for file in $(basename $(wildcard images/*.png)) ; do \
 		if [ -e "$$file.png" ]; then \
+			convert $$file.png -resize 960x576 $$file-960x576.png; \
 			convert $$file.png -resize 640x480 $$file-640x480.png; \
 			convert $$file.png -resize 320x240 $$file-320x240.png; \
 		fi; \
 	done
 	@echo
-	@echo All PNGs resized to 640x480 and 320x240 for HTML display
+	@echo All PNGs resized to 960x576, 640x480 and 320x240 for HTML display
 	@echo
 else
 	@echo "Program \"convert\" missing."
