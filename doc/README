@@ -1,5 +1,2 @@
-To build the Texinfo Web Publisher Documentation type
+To build the Texinfo Publisher Documentation type
 make
-
-To publish the Texinfo Web Publisher Documentation type
-make website
