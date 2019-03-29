@@ -22,11 +22,15 @@ Run the command './configure' for more information.
 After configuration run the command 'make'
 This will build:
 
-index.html and associated HTML files.
+index.html, indexNoSplit.html and associated HTML files.
 	   This file has relative links to the .pdf, .txt, .epub and .zip files.
 
+indexNoSplit.html has all HTML content on one page.
+Website_frame.html has all HTML content in a frame.
+
 Website.pdf  - Your PDF manual
-Website.txt  - Text version of your manual
+Website.txt  - Text version of your manual with ASCII graphics.
+Website_PlainText.txt - Plain text version of your manual with no ASCII graphics.
 Website.info - Info version of your manual
 Website.epub - EPUB Book of your manual. This will only be created if your
               system has the package dbtoepub installed.
@@ -163,3 +167,48 @@ Generate HTML using the Cascading Style Sheet (CSS) css/infodoc-styles.css
 
 make CSS=css/sirgazil-document-1.0.1.css
 Generate HTML using the Cascading Style Sheet (CSS) css/sirgazil-document-1.0.1.css
+
+Graphics Commands
+-----------------
+
+Run the command 'png2eps'.
+In the images/ directory convert all .png files to .eps format.
+
+Run the command 'jpg2eps'.
+In the images/ directory convert all .jpg files to .eps format.
+
+Run the command 'gif2eps'.
+In the images/ directory convert all .gif files to .eps format.
+
+Run the command 'jpg2txt'.
+In the images/ directory convert all .jpg files to .txt format.
+
+Run the command 'png2txt'.
+In the images/ directory convert all .png files to .txt format.
+
+Run the command 'gif2png'.
+In the images/ directory convert all .gif files to .png format.
+
+Run the command 'gif2jpg'.
+In the images/ directory convert all .gif files to .jpg format.
+
+Run the command 'jpg2png'.
+In the images/ directory convert all .jpg files to .png format.
+
+Run the command 'eps2pdf'.
+In the images/ directory convert all .eps files to .pdf format.
+
+Misc
+----
+
+Run the command 'linkchecker'.
+Run linkchecker on the document.
+See 'linkchecker'.
+
+Run the command 'style'.
+Run style command on the document.
+See 'man style'.
+
+Run the command 'diction'.
+Run diction command on the document.
+See 'man diction'.
