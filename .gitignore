@@ -24,5 +24,7 @@
 bak/
 doc/bak
 images/*.txt
+doc/images/*.txt
 images/*.eps
+doc/images/*.eps
 typescript
