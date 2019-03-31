@@ -72,9 +72,9 @@ This is a Texinfo Template Website. Copyright @copyright{} 2012.
 @cindex Plain text
 <a href="@value{Manual}_PlainText.txt">Plain text version of this website</a> 
 <br>
-<a href="textsplit">Split text version of this website</a> 
+<a href="textsplit/">Split text version of this website</a>
 <br>
-<a href="plaintextsplit">Split plain text version of this website</a>
+<a href="plaintextsplit/">Split plain text version of this website</a>
 <br>
 @end ifset
 @ifset EPUB
