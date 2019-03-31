@@ -66,38 +66,32 @@ ifneq (,$(findstring EPUB,$(TEXI2DVI_FLAGS)))
 	endif
 endif
 
-TEMPLATE_DIR := Templates
-FIND_TEMPLATE_FILES = $(basename $(wildcard $(TEMPLATE_DIR)/*.texi))
-TEMPLATE_FILES := $(foreach dir,$(TEMPLATE_DIR),$(FIND_TEMPLATE_FILES))
-
 IMAGES_DIR := images
 
-FIND_EPS_FILES = $(basename $(wildcard $(IMAGES_DIR)/*.eps))
-EPS_FILES := $(foreach dir,$(IMAGES_DIR),$(FIND_EPS_FILES))
+FIND_EPS_FILES = $(wildcard $(IMAGES_DIR)/*.eps)
+EPS_FILES_TO_PDF = $(FIND_EPS_FILES:.eps=.pdf)
 
-FIND_PNG_FILES = $(basename $(wildcard $(IMAGES_DIR)/*.png))
-PNG_FILES := $(foreach dir,$(IMAGES_DIR),$(FIND_PNG_FILES))
+FIND_PNG_FILES = $(wildcard $(IMAGES_DIR)/*.png)
+FIND_PNG_FILES_UPPERCASE = $(wildcard $(IMAGES_DIR)/*.PNG)
+PNG_FILES_TO_EPS = $(FIND_PNG_FILES:.png=.eps)
+PNG_FILES_TO_TXT = $(FIND_PNG_FILES:.png=.txt)
+PNG_FILES_TO_LOWERCASE = $(FIND_PNG_FILES_UPPERCASE:.PNG=.png)
 
-FIND_PNG_FILES_UPPERCASE = $(basename $(wildcard $(IMAGES_DIR)/*.PNG))
-PNG_FILES_UPPERCASE := $(foreach dir,$(IMAGES_DIR),$(FIND_PNG_FILES_UPPERCASE))
+FIND_JPG_FILES = $(wildcard $(IMAGES_DIR)/*.jpg)
+FIND_JPG_FILES_UPPERCASE = $(wildcard $(IMAGES_DIR)/*.JPG)
+FIND_JPEG_FILES = $(wildcard $(IMAGES_DIR)/*.JPEG)
+FIND_jpeg_FILES = $(wildcard $(IMAGES_DIR)/*.jpeg)
+JPG_FILES_TO_EPS = $(FIND_JPG_FILES:.jpg=.eps)
+JPG_FILES_TO_TXT = $(FIND_JPG_FILES:.jpg=.txt)
+JPG_FILES_TO_PNG = $(FIND_JPG_FILES:.jpg=.png)
+JPG_FILES_TO_LOWERCASE = $(FIND_JPG_FILES_UPPERCASE:.JPG=.jpg)
+JPEG_FILES_TO_LOWERCASE = $(FIND_JPEG_FILES:.JPEG=.jpg)
+jpeg_FILES_TO_LOWERCASE = $(FIND_jpeg_FILES:.jpeg=.jpg)
 
-FIND_JPG_FILES = $(basename $(wildcard $(IMAGES_DIR)/*.jpg))
-JPG_FILES := $(foreach dir,$(IMAGES_DIR),$(FIND_JPG_FILES))
-
-FIND_JPG_FILES_UPPERCASE = $(basename $(wildcard $(IMAGES_DIR)/*.JPG))
-JPG_FILES_UPPERCASE := $(foreach dir,$(IMAGES_DIR),$(FIND_JPG_FILES_UPPERCASE))
-
-FIND_JPEG_FILES_UPPERCASE = $(basename $(wildcard $(IMAGES_DIR)/*.JPEG))
-JPEG_FILES_UPPERCASE := $(foreach dir,$(IMAGES_DIR),$(FIND_JPEG_FILES_UPPERCASE))
-
-FIND_JPEG_FILES_LOWERCASE = $(basename $(wildcard $(IMAGES_DIR)/*.jpeg))
-JPEG_FILES_LOWERCASE := $(foreach dir,$(IMAGES_DIR),$(FIND_JPEG_FILES_LOWERCASE))
-
-FIND_GIF_FILES = $(basename $(wildcard $(IMAGES_DIR)/*.gif))
-GIF_FILES := $(foreach dir,$(IMAGES_DIR),$(FIND_GIF_FILES))
-
-FIND_PDF_FILES = $(basename $(wildcard $(IMAGES_DIR)/*.pdf))
-PDF_FILES := $(foreach dir,$(IMAGES_DIR),$(FIND_PDF_FILES))
+FIND_GIF_FILES = $(wildcard $(IMAGES_DIR)/*.gif)
+GIF_FILES_TO_EPS = $(FIND_GIF_FILES:.gif=.eps)
+GIF_FILES_TO_PNG = $(FIND_GIF_FILES:.gif=.png)
+GIF_FILES_TO_JPG = $(FIND_GIF_FILES:.gif=.jpg)
 
 texi2any_exists = $(shell { type texi2any; } 2>/dev/null)
 xmlto_exists = $(shell { type xmlto; } 2>/dev/null)
@@ -128,45 +122,47 @@ else
 	CUSTOM = -U CUST
 endif
 
-CLEAN_OBJECTS = *.html *.zip *.pdf *.djvu *.djv *.aux *.cp *.cps *.fn *.ky *.log *.op *.pg *.toc *.tp *.vr *.txt *.xml *.dbk *.hhc *.hhk *.hhp *.htmlhelp/docbook-xsl.css *.htmlhelp/*html *.htmlhelp/images/* *.epub *.proc *.dvi *.ps *.info *.info-* *.tar.gz *~ textsplit/* plaintextsplit/*
+CLEAN_OBJECTS = *.html *.zip *.pdf *.djvu *.djv *.aux *.cp *.cps *.fn *.ky *.log *.op *.pg *.toc *.tp *.vr *.txt *.xml *.dbk *.hhc *.hhk *.hhp *.htmlhelp/docbook-xsl.css *.htmlhelp/*html *.htmlhelp/images/* *.epub *.proc *.dvi *.ps *.info *.info-* *.tar.gz *~ textsplit/* plaintextsplit/* images/*.txt images/*.eps
 
 .PHONY: all
-all: $(Manual).tar.gz index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual)_PlainText.txt $(Manual).txt textsplit/$(Manual).txt plaintextsplit/$(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip
-	if [ ! -d files ]; then \
-		(mkdir files ); \
-	fi;
+#all: $(PNG_FILES_TO_LOWERCASE) $(JPG_FILES_TO_LOWERCASE) $(JPEG_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(Manual).tar.gz index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual)_PlainText.txt $(Manual).txt textsplit/$(Manual).txt plaintextsplit/$(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip backup message
+
+all: $(PNG_FILES_TO_LOWERCASE) $(JPG_FILES_TO_LOWERCASE) $(JPEG_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(Manual).tar.gz $(Manual)_PlainText.txt plaintextsplit/$(Manual).txt index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual).txt textsplit/$(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip backup message
+
+.PHONY: backup
+backup:
 	if [ ! -d bak ]; then \
 		(mkdir bak ); \
 	fi;
 	@cp $(Manual).texi bak/"$(Manual).texi.`date '+%Y%m%d'`"
 	@cp Makefile bak/"Makefile.`date '+%Y%m%d'`"
 	@echo
-	@echo "To view type:"
-	@echo "               firefox index.html  (UNIX/Linux)"
-	@echo "               nautilus .          (GNOME Desktop)"
-	@echo "               kde-open index.html (KDE)"
-	@echo "               explorer .          (Windows/Cygwin)"
-	@echo "               explorer index.html (Windows/Cygwin)"
-	@echo
 
-# subdirs removed from last item all:
-.PHONY: subdirs
-subdirs:
-	for d in $(DIRS); do \
-		if [ -d $$d ]; then \
-			($(MAKE) -C $$d) \
-		fi; \
-	done
+.PHONY: message
+message:
+	@echo "See: index.html"
+	@echo "     indexNoSplit.html"
+	@echo "     $(Manual)_frame.html"
+	@echo '     $(Manual).pdf'
+	@echo '     $(Manual).epub'
+	@echo '     $(Manual).dbk'
+	@echo '     $(Manual).txt'
+	@echo '     $(Manual)_PlainText.txt'
+	@echo '     $(Manual).info'
+	@echo '     $(Manual).tar.gz'
+	@echo '     $(Manual).zip'
+	@echo
+	@echo 'See directories plaintextsplit, textsplit.'
 
 .PHONY: dist
 dist: clean $(Manual).tar.gz
 
 $(Manual).tar.gz:
 	if [ -d ../doc ]; then \
-		(cd ../.. && tar --exclude '*.eps' --exclude '.git' -czvf $(Manual).tar.gz $(Manual) ); \
+		(cd ../.. && tar --exclude '*.eps' --exclude '.git' --exclude 'bak' -czvf $(Manual).tar.gz $(Manual) ); \
 		(mv -f ../../$(Manual).tar.gz .); \
 	else \
-		(cd .. && tar --exclude '*.eps' --exclude '.git' -czvf $(Manual).tar.gz $(notdir $(shell pwd)) ); \
+		(cd .. && tar --exclude '*.eps' --exclude '.git' --exclude 'bak' -czvf $(Manual).tar.gz $(notdir $(shell pwd)) ); \
 		(mv -f ../$(Manual).tar.gz .); \
 	fi
 
@@ -210,14 +206,6 @@ frames: $(Manual).texi
 	@echo
 	@echo
 
-.PHONY:	templates
-templates:
-	for d in templates/$(DIRS); do\
-		if [ -d $$d ]; then\
-			($(MAKE) -C $$d)\
-		fi;\
-	done
-
 .PHONY: pdf2
 pdf2: docbook
 ifneq ($(dblatex_exists),)
@@ -230,7 +218,7 @@ ifneq ($(dblatex_exists),)
 	@echo
 else
 	@echo "Program \"dblatex\" missing."
-	@echo "Try: sudo apt-get install dblatex"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 .PHONY: html2
@@ -251,7 +239,7 @@ ifneq ($(xmlto_exists),)
 	@echo
 else
 	@echo "Program \"xmlto\" missing."
-	@echo "Try: sudo apt-get install xmlto"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 .PHONY: xml
@@ -282,7 +270,7 @@ ifneq ($(pdf2djvu_exists),)
 	@$(if $(findstring -D DJVU,$(TEXI2DVI_FLAGS)), pdf2djvu -o $(Manual).djvu $(Manual).pdf ; echo; echo "DjVu file created. See $(Manual).djvu" ; echo )
 else
 	@echo "Program \"pdf2djvu\" missing."
-	@echo "Try: sudo apt-get install pdf2djvu"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 .PHONY: epub
@@ -295,7 +283,7 @@ else
 	@echo
 	@echo "Program \"dbtoepub\" missing."
 	@echo "\"dbtoepub\" is needed to generate EPUB documents."
-	@echo "Try: sudo apt-get install dbtoepub"
+	@echo "Run or read file 'configure' to learn how to add this program."
 	@echo
 endif
 
@@ -319,13 +307,13 @@ plaintextsplit/$(Manual).txt: $(Manual).texi
 .PHONY: text
 text: TEXI2DVI_FLAGS += -D TEXT
 text: $(Manual).txt
-$(Manual).txt: $(Manual).texi jpg2txt png2txt
+$(Manual).txt: $(Manual).texi $(JPG_FILES_TO_TXT) $(PNG_FILES_TO_TXT)
 	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual).txt ; echo ; echo "Plain text created. Images converted to ASCII. See $(Manual).txt" ; echo )
 
 .PHONY: textsplit
 textsplit: TEXI2DVI_FLAGS += -D TEXT
 textsplit: textsplit/$(Manual).txt
-textsplit/$(Manual).txt: $(Manual).texi jpg2txt png2txt
+textsplit/$(Manual).txt: $(Manual).texi $(JPG_FILES_TO_TXT) $(PNG_FILES_TO_TXT)
 	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o textsplit ; echo ; echo "Split plain text created. Images converted to ASCII. See directory textsplit" ; echo )
 
 .PHONY: zip
@@ -337,7 +325,7 @@ ifneq ($(zip_exists),)
 	@$(if $(findstring -D ZIP,$(TEXI2DVI_FLAGS)), zip -r $(Manual).zip * --exclude *.eps *.zip bak/* images/bak/* $(Manual).tar.gz)
 else
 	@echo "Program \"zip\" missing."
-	@echo "Try: sudo apt-get install zip"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 .PHONY: info
@@ -352,13 +340,13 @@ info: $(Manual).info
 postscript: ps
 ps: TEXI2DVI_FLAGS += -D POSTSCRIPT
 ps: $(Manual).ps
-$(Manual).ps: $(Manual).texi png2eps jpg2eps gif2eps
+$(Manual).ps: $(Manual).texi $(JPG_FILES_TO_EPS) $(PNG_FILES_TO_EPS) $(GIF_FILES_TO_EPS)
 	@$(if $(findstring -D POSTSCRIPT,$(TEXI2DVI_FLAGS)), $(TEXI2DVI) --ps $(Manual).texi; echo ; echo "PostScript created. See $(Manual).ps"; echo )
 
 .PHONY: dvi
 dvi: TEXI2DVI_FLAGS += -D DVI
 dvi: $(Manual).dvi
-$(Manual).dvi: $(Manual).texi png2eps jpg2eps gif2eps
+$(Manual).dvi: $(Manual).texi $(JPG_FILES_TO_EPS) $(PNG_FILES_TO_EPS) $(GIF_FILES_TO_EPS)
 	@$(if $(findstring -D DVI,$(TEXI2DVI_FLAGS)), $(TEXI2DVI) --dvi $(Manual).texi ; echo; echo "Device independent file format (DVI) created. See $(Manual).dvi"; echo)
 
 # Build Microsoft HTML Helper File (.chm)
@@ -387,31 +375,33 @@ ifneq ($(aspell_exists),)
 	aspell --mode=texinfo -c $(Manual).texi
 else
 	@echo "Program \"aspell\" missing."
-	@echo "Try: sudo apt-get install aspell"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
-# Check diction. See 'man diction'
+# Check diction. For more information type 'man diction' on the command line
 .PHONY: diction
 diction:
 ifneq ($(diction_exists),)
+	@-rm -f images/*.txt
 	$(TEXI2ANY)  --no-headers \
 		$(Manual).texi -o $(Manual).txt
 	diction < $(Manual).txt
 else
 	@echo "Program \"diction\" missing."
-	@echo "Try: sudo apt-get install diction"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
-# Check style. See 'man style'
+# Check style. For more information type 'man style' on the command line
 .PHONY: style
 style:
 ifneq ($(style_exists),)
+	@-rm -f images/*.txt
 	$(TEXI2ANY)  --no-headers \
 		$(Manual).texi -o $(Manual).txt
 	style < $(Manual).txt
 else
 	@echo "Program \"style\" missing."
-	@echo "Try: sudo apt-get install style"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 .PHONY: resize
@@ -422,16 +412,22 @@ resize: backup_images resizejpg resizepng
 # resize all JPEG images in ./images to 960x576,
 # 640x480 and 320x240
 .PHONY: resizejpg
-resizejpg: jpgLowercase
+resizejpg:
 ifneq ($(convert_exists),)
 	@-rm -f images/*960x576*jpg
 	@-rm -f images/*640x480*jpg
 	@-rm -f images/*320x240*jpg
 	for file in $(basename $(wildcard images/*.jpg)) ; do \
 		if [ -e "$$file.jpg" ]; then \
-			convert $$file.jpg -resize 960x576 $$file-960x576.jpg; \
-			convert $$file.jpg -resize 640x480 $$file-640x480.jpg; \
-			convert $$file.jpg -resize 320x240 $$file-320x240.jpg; \
+			if [ ! -e "$$file-960x576.jpg" ]; then \
+				convert $$file.jpg -resize 960x576 $$file-960x576.jpg; \
+			fi; \
+			if [ ! -e "$$file-640x480.jpg" ]; then \
+				convert $$file.jpg -resize 640x480 $$file-640x480.jpg; \
+			fi; \
+			if [ ! -e "$$file-320x240.jpg" ]; then \
+				convert $$file.jpg -resize 320x240 $$file-320x240.jpg; \
+			fi; \
 		fi; \
 	done
 	@echo
@@ -439,7 +435,7 @@ ifneq ($(convert_exists),)
 	@echo
 else
 	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 # Resize PNG images for HTML publishing
@@ -447,16 +443,22 @@ endif
 # resize all PNG images in ./images to 960x576,
 # 640x480 and 320x240
 .PHONY: resizepng
-resizepng: pngLowercase
+resizepng:
 ifneq ($(convert_exists),)
 	@-rm -f images/*960x576*png
 	@-rm -f images/*640x480*png
 	@-rm -f images/*320x240*png
 	for file in $(basename $(wildcard images/*.png)) ; do \
 		if [ -e "$$file.png" ]; then \
-			convert $$file.png -resize 960x576 $$file-960x576.png; \
-			convert $$file.png -resize 640x480 $$file-640x480.png; \
-			convert $$file.png -resize 320x240 $$file-320x240.png; \
+			if [ ! -e "$$file-960x576.png" ]; then \
+				convert $$file.png -resize 960x576 $$file-960x576.png; \
+			fi; \
+			if [ ! -e "$$file-640x480.png" ]; then \
+				convert $$file.png -resize 640x480 $$file-640x480.png; \
+			fi; \
+			if [ ! -e "$$file-320x240.png" ]; then \
+				convert $$file.png -resize 320x240 $$file-320x240.png; \
+			fi; \
 		fi; \
 	done
 	@echo
@@ -464,7 +466,7 @@ ifneq ($(convert_exists),)
 	@echo
 else
 	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 .PHONY: backup_images
@@ -478,264 +480,115 @@ backup_images:
 	find ./images/ -maxdepth 1 -type f -exec cp {} ./images/bak \;
 	@echo All images in ./images backed up to ./images/bak
 
-.PHONY: pngLowercase
-pngLowercase:
-	for file in $(PNG_FILES_UPPERCASE); do \
-		if [ -e "$$file.png" ]; then \
-			echo "$$file.png exists"; \
-		else \
-			mv $$file.PNG $$file.png; \
-			echo "Renamed $$file.PNG to $$file.png"; \
-		fi; \
-	done
-
-.PHONY: jpgLowercase
-jpgLowercase:
-	for file in $(JPG_FILES_UPPERCASE); do \
-		if [ -e "$$file.jpg" ]; then \
-			echo "$$file.jpg exists"; \
-		else \
-			mv $$file.JPG $$file.jpg; \
-			echo "Renamed $$file.JPG to $$file.jpg"; \
-		fi; \
-	done
-	for file in $(JPEG_FILES_UPPERCASE); do \
-		if [ -e "$$file.jpg" ]; then \
-			echo "$$file.jpg exists"; \
-		else \
-			mv $$file.JPEG $$file.jpg; \
-			echo "Renamed $$file.JPEG to $$file.jpg"; \
-		fi; \
-	done
-	for file in $(JPEG_FILES_LOWERCASE); do \
-		if [ -e "$$file.jpg" ]; then \
-			echo "$$file.jpg exists"; \
-		else \
-			mv $$file.jpeg $$file.jpg; \
-			echo "Renamed $$file.jpeg to $$file.jpg"; \
-		fi; \
-	done
-
 .PHONY: png2eps
-png2eps: pngLowercase
+png2eps: $(PNG_FILES_TO_EPS)
+
+images/%.eps: images/%.png
 ifneq ($(convert_exists),)
-	for file in $(PNG_FILES); do \
-		if [ -e "$$file.eps" ]; then \
-			echo "$$file.eps exists"; \
-		else \
-			convert $$file.png $$file.eps; \
-			echo "Creating $$file.eps"; \
-		fi; \
-	done
-	@echo
-	@echo All .png files converted to .eps
-	@echo Original .png files remain
-	@echo
+	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
-.PHONY: jpg2eps 
-jpg2eps:
+.PHONY: jpg2eps
+jpg2eps: $(JPG_FILES_TO_EPS)
+
+images/%.eps: images/%.jpg
 ifneq ($(convert_exists),)
-	for file in $(JPG_FILES); do \
-		if [ -e "$$file.eps" ]; then \
-			echo "$$file.eps exists"; \
-		else \
-			convert $$file.jpg $$file.eps; \
-			echo "Creating $$file.eps"; \
-		fi; \
-	done
-	@echo
-	@echo All .jpg files converted to .eps
-	@echo Original .jpg files remain
-	@echo
+	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 .PHONY: gif2eps
-gif2eps:
+gif2eps: $(GIF_FILES_TO_EPS)
+
+images/%.eps: images/%.gif
 ifneq ($(convert_exists),)
-	for file in $(GIF_FILES); do \
-		if [ -e "$$file.eps" ]; then \
-			echo "$$file.eps exists"; \
-		else \
-			convert $$file.gif $$file.eps; \
-			echo "Creating $$file.eps"; \
-		fi; \
-	done
-	@echo
-	@echo All .gif files converted to .eps
-	@echo Original .gif files remain
-	@echo
+	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
-endif
-
-.PHONY: gif2png
-gif2png:
-ifneq ($(convert_exists),)
-	for file in $(GIF_FILES); do \
-		if [ -e "$$file.png" ]; then \
-			echo "$$file.png exists"; \
-		else \
-			convert $$file.gif $$file.png; \
-			echo "Creating $$file.png"; \
-		fi; \
-	done
-	@echo
-	@echo All .gif files converted to .png
-	@echo Original .gif files remain
-	@echo
-else
-	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
-endif
-
-.PHONY: pdf2png
-pdf2png:
-ifneq ($(convert_exists),)
-	for file in $(PDF_FILES); do \
-		if [ -e "$$file.png" ]; then \
-			echo "$$file.png exists"; \
-		else \
-			convert $$file.pdf $$file.png; \
-			echo "Creating $$file.png"; \
-		fi; \
-	done
-	@echo
-	@echo All .pdf files converted to .png
-	@echo Original .pdf files remain
-	@echo
-else
-	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
-endif
-
-.PHONY: gif2jpg
-gif2jpg:
-ifneq ($(convert_exists),)
-	for file in $(GIF_FILES); do \
-		if [ -e "$$file.jpg" ]; then \
-			echo "$$file.jpg exists"; \
-		else \
-			convert $$file.gif $$file.jpg; \
-			echo "Creating $$file.jpg"; \
-		fi; \
-	done
-	@echo
-	@echo All .gif files converted to .jpg
-	@echo Original .gif files remain
-	@echo
-else
-	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
-endif
-
-.PHONY: jpg2png
-jpg2png: jpgLowercase
-ifneq ($(convert_exists),)
-	for file in $(JPG_FILES); do \
-		if [ -e "$$file.png" ]; then \
-			echo "$$file.png exists"; \
-		else \
-			convert $$file.jpg $$file.png; \
-			echo "Creating $$file.png"; \
-		fi; \
-	done
-	@echo
-	@echo All .jpg files converted to .png
-	@echo Original .jpg files remain
-	@echo
-else
-	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
-endif
-
-.PHONY: eps2png
-eps2png:
-ifneq ($(convert_exists),)
-	for file in $(EPS_FILES); do \
-		if [ -e "$$file.png" ]; then \
-			echo "$$file.png exists"; \
-		else \
-			convert $$file.eps $$file.png; \
-			echo "Creating $$file.png"; \
-		fi; \
-	done
-	@echo
-	@echo All .png files converted to .eps
-	@echo Original .eps files remain
-	@echo
-else
-	@echo "Program \"convert\" missing."
-	@echo "Try: sudo apt-get install convert"
-endif
-
-.PHONY: eps2pdf
-eps2pdf:
-ifneq ($(epstopdf_exists),)
-	for file in $(EPS_FILES); do \
-		if [ -e "$$file.pdf" ]; then \
-			echo "$$file.pdf exists"; \
-		else \
-			epstopdf $$file.eps; \
-			echo "Creating $$file.pdf"; \
-		fi; \
-	done
-	@echo
-	@echo All .eps files converted to .pdf
-	@echo Original .eps files remain
-	@echo
-else
-	@echo "Program \"epstopdf\" missing."
-	@echo "Try: sudo apt-get install epstopdf"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 .PHONY: jpg2txt
-jpg2txt: jpgLowercase
+jpg2txt: $(JPG_FILES_TO_TXT)
+
+images/%.txt: images/%.jpg
 ifneq ($(jp2a_exists),)
-	for file in $(JPG_FILES); do \
-		if [ -e "$$file.txt" ]; then \
-			echo "$$file.txt exists"; \
-		else \
-			jp2a --width=155 $$file.jpg > $$file.txt; \
-			echo "Creating $$file.txt"; \
-		fi; \
-	done
-	@echo
-	@echo All .jpg files converted to .txt
-	@echo Original .jpg files remain
-	@echo
+	jp2a --width=155  '$<' > '$@'
 else
 	@echo "Program \"jp2a\" missing."
-	@echo "Try: sudo apt-get install jp2a"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 .PHONY: png2txt
-png2txt:
+png2txt: $(PNG_FILES_TO_TXT)
+
+images/%.txt: images/%.png
 ifeq ($(CONVERT_JP2A_EXISTS),Y Y)
-	for file in $(PNG_FILES); do \
-		if [ -e "$$file.txt" ]; then \
-			echo "$$file.txt exists"; \
-		else \
-			convert $$file.png jpg:- | jp2a - --width=155 > $$file.txt; \
-			echo "Creating $$file.txt"; \
-		fi; \
-	done
-	@echo
-	@echo All .png files converted to .txt
-	@echo Original .png files remain
-	@echo
+	convert '$<' jpg:- | jp2a - --width=155 > '$@'
 else
-	@echo
 	@echo "Program \"convert\" or \"jp2a\" missing."
-	@echo "Try: sudo apt-get install imagemagick jp2a"
-	@echo
+	@echo "Run or read file 'configure' to learn how to add this program."
+endif
+
+images/%.jpg: images/%.JPG
+	mv '$<' '$@'
+
+images/%.jpg: images/%.JPEG
+	mv '$<' '$@'
+
+images/%.jpg: images/%.jpeg
+	mv '$<' '$@'
+
+images/%.png: images/%.PNG
+	mv '$<' '$@'
+
+.PHONY: gif2png
+gif2png: $(GIF_FILES_TO_PNG)
+
+images/%.png: images/%.gif
+ifneq ($(convert_exists),)
+	convert '$<' '$@'
+else
+	@echo "Program \"convert\" missing."
+	@echo "Run or read file 'configure' to learn how to add this program."
+endif
+
+.PHONY: gif2jpg
+gif2jpg: $(GIF_FILES_TO_JPG)
+
+images/%.jpg: images/%.gif
+ifneq ($(convert_exists),)
+	convert '$<' '$@'
+else
+	@echo "Program \"convert\" missing."
+	@echo "Run or read file 'configure' to learn how to add this program."
+endif
+
+.PHONY: jpg2png
+jpg2png: $(JPG_FILES_TO_PNG)
+
+images/%.png: images/%.jpg
+ifneq ($(convert_exists),)
+	convert '$<' '$@'
+else
+	@echo "Program \"convert\" missing."
+	@echo "Run or read file 'configure' to learn how to add this program."
+endif
+
+.PHONY: eps2pdf
+eps2pdf: $(EPS_FILES_TO_PDF)
+
+images/%.pdf: images/%.eps
+ifneq ($(convert_exists),)
+	convert '$<' '$@'
+else
+	@echo "Program \"convert\" missing."
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 # Check for bad links
@@ -752,7 +605,7 @@ ifneq ($(linkchecker_exists),)
 	@echo
 else
 	@echo "Program \"linkchecker\" missing."
-	@echo "Try: sudo apt-get install linkchecker"
+	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
 # Print help information
@@ -764,16 +617,14 @@ help:
 		(echo "No help available") ; \
 	fi;
 
+.PHONY: nothing
+nothing:
+	@echo "Nothing done."
+
 .PHONY: distclean
-distclean:
+distclean: clean
 	@-rm -f bak/*
 	@-rm -f images/bak/*
-	@-rm -f $(CLEAN_OBJECTS)
-	for d in $(DIRS); do\
-		if [ -d $$d ] && [ -e "$$d/Makefile" ]; then\
-			(cd $$d; $(MAKE) distclean );\
-		fi;\
-	done
 
 .PHONY: clean
 clean:
