@@ -77,15 +77,17 @@ Copyright @copyright{}  @var{2012}  @var{Anthony Bradford}.
 <a href="indexNoSplit.html">Single-page HTML version of this manual</a>
 <br>
 @end ifset
-@ifset ZIP
-@cindex Zip
-<a href="@value{Manual}.zip">HTML zip package of this manual</a>
-<br>
-@end ifset
 @ifset TEXT
 @cindex Text
 @cindex Plain text
 <a href="@value{Manual}.txt">Text version of this manual</a> 
+<br>
+@cindex Plain text
+<a href="@value{Manual}_PlainText.txt">Plain text version of this manual</a> 
+<br>
+<a href="textsplit">Split text version of this manual</a> 
+<br>
+<a href="plaintextsplit">Split plain text version of this manual</a>
 <br>
 @end ifset
 @ifset EPUB
@@ -104,6 +106,13 @@ Copyright @copyright{}  @var{2012}  @var{Anthony Bradford}.
 <a href="@value{Manual}.dvi">@TeX{} DVI version of this manual</a> 
 <br>
 @end ifset
+@ifset ZIP
+@cindex Zip
+<a href="@value{Manual}.zip">HTML zip package of this manual</a>
+<br>
+@end ifset
+<a href="@value{Manual}.tar.gz">Gzipped tar source of this manual</a> 
+<br>
 <br>
 @end html
 
@@ -824,7 +833,7 @@ The commands @command{make dvi} and @command{make ps} both automatically run jpg
 @section Zip file
 @cindex Zip
 @cindex .zip
-Publish to a website with the @command{make website} command or un-zip the @file{Website.zip} into any public_html web server space. @file{Website.zip} can be un-zipped to a directory below public_html but you must establish a link to the content.
+Un-zip the @file{Website.zip} into any public_html web server space. @file{Website.zip} can be un-zipped to a directory below public_html but you must establish a link to the content.
 
 @section Microsoft HTML Helper file
 @cindex HTML Helper
@@ -1032,10 +1041,6 @@ If the @file{Makefile} becomes corrupt, dated backups can be found the directory
 
 @section @file{texinfopublisher-@value{VERSION}/files} directory
 @anchor{filesDirectory}
-The command @command{make website} pushes three directories to the target web server.
-The content from @file{texinfopublisher-@value{VERSION}/}, and the immediate subdirectories @file{images/} and @file{files/} are placed on the web server.
-@*
-@*
 The @file{files/} directory can be used for miscellaneous files associated with your content. The use of this directory will reduce clutter. The @file{files/} directory is never cleaned by @command{make clean}.
 
 @section Favicon
@@ -1076,11 +1081,7 @@ This Texinfo Publisher manual is written in GNU Texinfo. Inside the directory of
 @example
 make
 @end example
-
-If you would like to publish the Texinfo Publisher Manual in multiple formats to a website type
-@example
-make website
-@end example
+This will compile the documentation into many formats.
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
