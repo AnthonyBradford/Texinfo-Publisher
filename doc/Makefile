@@ -125,8 +125,6 @@ endif
 CLEAN_OBJECTS = *.html *.zip *.pdf *.djvu *.djv *.aux *.cp *.cps *.fn *.ky *.log *.op *.pg *.toc *.tp *.vr *.txt *.xml *.dbk *.hhc *.hhk *.hhp *.htmlhelp/docbook-xsl.css *.htmlhelp/*html *.htmlhelp/images/* *.epub *.proc *.dvi *.ps *.info *.info-* *.tar.gz *~ textsplit/* plaintextsplit/* images/*.txt images/*.eps
 
 .PHONY: all
-#all: $(PNG_FILES_TO_LOWERCASE) $(JPG_FILES_TO_LOWERCASE) $(JPEG_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(Manual).tar.gz index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual)_PlainText.txt $(Manual).txt textsplit/$(Manual).txt plaintextsplit/$(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip backup message
-
 all: $(PNG_FILES_TO_LOWERCASE) $(JPG_FILES_TO_LOWERCASE) $(JPEG_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(Manual).tar.gz $(Manual)_PlainText.txt plaintextsplit/$(Manual).txt index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual).txt textsplit/$(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip backup message
 
 .PHONY: backup
@@ -165,6 +163,9 @@ $(Manual).tar.gz:
 		(cd .. && tar --exclude '*.eps' --exclude '.git' --exclude 'bak' -czvf $(Manual).tar.gz $(notdir $(shell pwd)) ); \
 		(mv -f ../$(Manual).tar.gz .); \
 	fi
+
+.PHONY: html
+html: all
 
 index.html: $(Manual).texi
 	@$(if $(findstring -D SPLIT,$(TEXI2DVI_FLAGS)),	\
