@@ -77,6 +77,11 @@ PNG_FILES_TO_EPS = $(FIND_PNG_FILES:.png=.eps)
 PNG_FILES_TO_TXT = $(FIND_PNG_FILES:.png=.txt)
 PNG_FILES_TO_LOWERCASE = $(FIND_PNG_FILES_UPPERCASE:.PNG=.png)
 
+FIND_PNG_FILES_FILTER = $(filter-out $(wildcard $(IMAGES_DIR)/*320x240*) $(wildcard $(IMAGES_DIR)/*640x480*) $(wildcard $(IMAGES_DIR)/*960x576*), $(wildcard $(IMAGES_DIR)/*.png))
+PNG_FILES_TO_960x576 = $(FIND_PNG_FILES_FILTER:.png=-960x576.png)
+PNG_FILES_TO_640x480 = $(FIND_PNG_FILES_FILTER:.png=-640x480.png)
+PNG_FILES_TO_320x240 = $(FIND_PNG_FILES_FILTER:.png=-320x240.png)
+
 FIND_JPG_FILES = $(wildcard $(IMAGES_DIR)/*.jpg)
 FIND_JPG_FILES_UPPERCASE = $(wildcard $(IMAGES_DIR)/*.JPG)
 FIND_JPEG_FILES = $(wildcard $(IMAGES_DIR)/*.JPEG)
@@ -87,6 +92,11 @@ JPG_FILES_TO_PNG = $(FIND_JPG_FILES:.jpg=.png)
 JPG_FILES_TO_LOWERCASE = $(FIND_JPG_FILES_UPPERCASE:.JPG=.jpg)
 JPEG_FILES_TO_LOWERCASE = $(FIND_JPEG_FILES:.JPEG=.jpg)
 jpeg_FILES_TO_LOWERCASE = $(FIND_jpeg_FILES:.jpeg=.jpg)
+
+FIND_JPG_FILES_FILTER = $(filter-out $(wildcard $(IMAGES_DIR)/*320x240*) $(wildcard $(IMAGES_DIR)/*640x480*) $(wildcard $(IMAGES_DIR)/*960x576*), $(wildcard $(IMAGES_DIR)/*.jpg))
+JPG_FILES_TO_960x576 = $(FIND_JPG_FILES_FILTER:.jpg=-960x576.jpg)
+JPG_FILES_TO_640x480 = $(FIND_JPG_FILES_FILTER:.jpg=-640x480.jpg)
+JPG_FILES_TO_320x240 = $(FIND_JPG_FILES_FILTER:.jpg=-320x240.jpg)
 
 FIND_GIF_FILES = $(wildcard $(IMAGES_DIR)/*.gif)
 GIF_FILES_TO_EPS = $(FIND_GIF_FILES:.gif=.eps)
@@ -408,63 +418,55 @@ endif
 .PHONY: resize
 resize: backup_images resizejpg resizepng
 
-# Resize JPG images for HTML publishing
-# Backup all ./images to ./images/bak
-# resize all JPEG images in ./images to 960x576,
-# 640x480 and 320x240
 .PHONY: resizejpg
-resizejpg:
+resizejpg: $(JPG_FILES_TO_960x576) $(JPG_FILES_TO_640x480) $(JPG_FILES_TO_320x240)
+
+images/%-960x576.jpg: images/%.jpg
 ifneq ($(convert_exists),)
-	@-rm -f images/*960x576*jpg
-	@-rm -f images/*640x480*jpg
-	@-rm -f images/*320x240*jpg
-	for file in $(basename $(wildcard images/*.jpg)) ; do \
-		if [ -e "$$file.jpg" ]; then \
-			if [ ! -e "$$file-960x576.jpg" ]; then \
-				convert $$file.jpg -resize 960x576 $$file-960x576.jpg; \
-			fi; \
-			if [ ! -e "$$file-640x480.jpg" ]; then \
-				convert $$file.jpg -resize 640x480 $$file-640x480.jpg; \
-			fi; \
-			if [ ! -e "$$file-320x240.jpg" ]; then \
-				convert $$file.jpg -resize 320x240 $$file-320x240.jpg; \
-			fi; \
-		fi; \
-	done
-	@echo
-	@echo All JPEGs resized to 960x576, 640x480 and 320x240 for HTML display
-	@echo
+	convert '$<' -resize 960x576 '$@'
 else
 	@echo "Program \"convert\" missing."
 	@echo "Run or read file 'configure' to learn how to add this program."
 endif
 
-# Resize PNG images for HTML publishing
-# Backup all ./images to ./images/bak
-# resize all PNG images in ./images to 960x576,
-# 640x480 and 320x240
-.PHONY: resizepng
-resizepng:
+images/%-640x480.jpg: images/%.jpg
 ifneq ($(convert_exists),)
-	@-rm -f images/*960x576*png
-	@-rm -f images/*640x480*png
-	@-rm -f images/*320x240*png
-	for file in $(basename $(wildcard images/*.png)) ; do \
-		if [ -e "$$file.png" ]; then \
-			if [ ! -e "$$file-960x576.png" ]; then \
-				convert $$file.png -resize 960x576 $$file-960x576.png; \
-			fi; \
-			if [ ! -e "$$file-640x480.png" ]; then \
-				convert $$file.png -resize 640x480 $$file-640x480.png; \
-			fi; \
-			if [ ! -e "$$file-320x240.png" ]; then \
-				convert $$file.png -resize 320x240 $$file-320x240.png; \
-			fi; \
-		fi; \
-	done
-	@echo
-	@echo All PNGs resized to 960x576, 640x480 and 320x240 for HTML display
-	@echo
+	convert '$<' -resize 640x480 '$@'
+else
+	@echo "Program \"convert\" missing."
+	@echo "Run or read file 'configure' to learn how to add this program."
+endif
+
+images/%-320x240.jpg: images/%.jpg
+ifneq ($(convert_exists),)
+	convert '$<' -resize 320x240 '$@'
+else
+	@echo "Program \"convert\" missing."
+	@echo "Run or read file 'configure' to learn how to add this program."
+endif
+
+.PHONY: resizepng
+resizepng: $(PNG_FILES_TO_960x576) $(PNG_FILES_TO_640x480) $(PNG_FILES_TO_320x240)
+
+images/%-960x576.png: images/%.png
+ifneq ($(convert_exists),)
+	convert '$<' -resize 960x576 '$@'
+else
+	@echo "Program \"convert\" missing."
+	@echo "Run or read file 'configure' to learn how to add this program."
+endif
+
+images/%-640x480.png: images/%.png
+ifneq ($(convert_exists),)
+	convert '$<' -resize 640x480 '$@'
+else
+	@echo "Program \"convert\" missing."
+	@echo "Run or read file 'configure' to learn how to add this program."
+endif
+
+images/%-320x240.png: images/%.png
+ifneq ($(convert_exists),)
+	convert '$<' -resize 320x240 '$@'
 else
 	@echo "Program \"convert\" missing."
 	@echo "Run or read file 'configure' to learn how to add this program."
