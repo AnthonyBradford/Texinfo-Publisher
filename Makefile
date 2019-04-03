@@ -148,6 +148,8 @@ backup:
 
 .PHONY: message
 message:
+	@echo "HTML contains links to all content formats."
+	@echo
 	@echo "See: index.html"
 	@echo "     indexNoSplit.html"
 	@echo "     $(Manual)_frame.html"
@@ -229,7 +231,7 @@ ifneq ($(dblatex_exists),)
 	@echo
 else
 	@echo "Program \"dblatex\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: html2
@@ -250,7 +252,7 @@ ifneq ($(xmlto_exists),)
 	@echo
 else
 	@echo "Program \"xmlto\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: xml
@@ -281,7 +283,7 @@ ifneq ($(pdf2djvu_exists),)
 	@$(if $(findstring -D DJVU,$(TEXI2DVI_FLAGS)), pdf2djvu -o $(Manual).djvu $(Manual).pdf ; echo; echo "DjVu file created. See $(Manual).djvu" ; echo )
 else
 	@echo "Program \"pdf2djvu\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: epub
@@ -294,7 +296,7 @@ else
 	@echo
 	@echo "Program \"dbtoepub\" missing."
 	@echo "\"dbtoepub\" is needed to generate EPUB documents."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 	@echo
 endif
 
@@ -336,7 +338,7 @@ ifneq ($(zip_exists),)
 	@$(if $(findstring -D ZIP,$(TEXI2DVI_FLAGS)), zip -r $(Manual).zip * --exclude *.eps *.zip bak/* images/bak/* $(Manual).tar.gz)
 else
 	@echo "Program \"zip\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: info
@@ -386,7 +388,7 @@ ifneq ($(aspell_exists),)
 	aspell --mode=texinfo -c $(Manual).texi
 else
 	@echo "Program \"aspell\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 # Check diction. For more information type 'man diction' on the command line
@@ -399,7 +401,7 @@ ifneq ($(diction_exists),)
 	diction < $(Manual).txt
 else
 	@echo "Program \"diction\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 # Check style. For more information type 'man style' on the command line
@@ -412,7 +414,7 @@ ifneq ($(style_exists),)
 	style < $(Manual).txt
 else
 	@echo "Program \"style\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: resize
@@ -426,7 +428,7 @@ ifneq ($(convert_exists),)
 	convert '$<' -resize 960x576 '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 images/%-640x480.jpg: images/%.jpg
@@ -434,7 +436,7 @@ ifneq ($(convert_exists),)
 	convert '$<' -resize 640x480 '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 images/%-320x240.jpg: images/%.jpg
@@ -442,7 +444,7 @@ ifneq ($(convert_exists),)
 	convert '$<' -resize 320x240 '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: resizepng
@@ -453,7 +455,7 @@ ifneq ($(convert_exists),)
 	convert '$<' -resize 960x576 '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 images/%-640x480.png: images/%.png
@@ -461,7 +463,7 @@ ifneq ($(convert_exists),)
 	convert '$<' -resize 640x480 '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 images/%-320x240.png: images/%.png
@@ -469,7 +471,7 @@ ifneq ($(convert_exists),)
 	convert '$<' -resize 320x240 '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: backup_images
@@ -491,7 +493,7 @@ ifneq ($(convert_exists),)
 	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: jpg2eps
@@ -502,7 +504,7 @@ ifneq ($(convert_exists),)
 	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: gif2eps
@@ -513,7 +515,7 @@ ifneq ($(convert_exists),)
 	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: jpg2txt
@@ -524,7 +526,7 @@ ifneq ($(jp2a_exists),)
 	jp2a --width=155  '$<' > '$@'
 else
 	@echo "Program \"jp2a\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: png2txt
@@ -535,7 +537,7 @@ ifeq ($(CONVERT_JP2A_EXISTS),Y Y)
 	convert '$<' jpg:- | jp2a - --width=155 > '$@'
 else
 	@echo "Program \"convert\" or \"jp2a\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 images/%.jpg: images/%.JPG
@@ -558,7 +560,7 @@ ifneq ($(convert_exists),)
 	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: gif2jpg
@@ -569,7 +571,7 @@ ifneq ($(convert_exists),)
 	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: jpg2png
@@ -580,7 +582,7 @@ ifneq ($(convert_exists),)
 	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 .PHONY: eps2pdf
@@ -591,7 +593,7 @@ ifneq ($(convert_exists),)
 	convert '$<' '$@'
 else
 	@echo "Program \"convert\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 # Check for bad links
@@ -608,7 +610,7 @@ ifneq ($(linkchecker_exists),)
 	@echo
 else
 	@echo "Program \"linkchecker\" missing."
-	@echo "Run or read file 'configure' to learn how to add this program."
+	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
 # Print help information
