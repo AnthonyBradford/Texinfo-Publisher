@@ -202,7 +202,8 @@ indexNoSplit.html: $(Manual).texi
 	)
 
 .PHONY: frames
-frames: $(Manual).texi
+frames: $(Manual)_frame.html
+$(Manual)_frame.html: $(Manual).texi
 	@-rm -f *.html
 	$(TEXI2ANY) \
 		-D LongContents \
@@ -215,7 +216,7 @@ frames: $(Manual).texi
 		--html $(Manual).texi -o .
 	@echo
 	@echo
-	@echo "Frame HTML created. See $(Manual)_frame.xml"
+	@echo "Frame HTML created. See $(Manual)_frame.html"
 	@echo
 	@echo
 
@@ -261,7 +262,9 @@ xml: $(Manual).xml
 $(Manual).xml: $(Manual).texi
 	@$(if $(findstring -D XML,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --xml $(Manual).texi ; echo ; echo ; echo "XML created. See $(Manual).xml"; echo )
 
+.PHONY: dbk
 .PHONY: docbook
+dbk: docbook
 docbook: TEXI2DVI_FLAGS += -D DOCBOOK
 docbook: $(Manual).dbk
 $(Manual).dbk: $(Manual).texi
