@@ -139,7 +139,7 @@ all: $(PNG_FILES_TO_LOWERCASE) $(JPG_FILES_TO_LOWERCASE) $(JPEG_FILES_TO_LOWERCA
 
 .PHONY: backup
 backup:
-	if [ ! -d bak ]; then \
+	@if [ ! -d bak ]; then \
 		(mkdir bak ); \
 	fi;
 	@cp $(Manual).texi bak/"$(Manual).texi.`date '+%Y%m%d'`"
