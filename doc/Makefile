@@ -114,6 +114,7 @@ pdf2djvu_exists = $(shell { type pdf2djvu; } 2>/dev/null)
 dblatex_exists = $(shell { type dblatex; } 2>/dev/null)
 epstopdf_exists = $(shell { type epstopdf; } 2>/dev/null)
 jp2a_exists = $(shell { type jp2a; } 2>/dev/null)
+a2x_exists = $(shell { type a2x; } 2>/dev/null)
 
 ifneq ($(convert_exists),)
 	CONVERT_JP2A_EXISTS += Y
@@ -144,7 +145,6 @@ backup:
 	fi;
 	@cp $(Manual).texi bak/"$(Manual).texi.`date '+%Y%m%d'`"
 	@cp Makefile bak/"Makefile.`date '+%Y%m%d'`"
-	@echo
 
 .PHONY: message
 message:
@@ -201,8 +201,11 @@ indexNoSplit.html: $(Manual).texi
 		--html $(Manual).texi -o indexNoSplit.html \
 	)
 
+.PHONY: frame
 .PHONY: frames
-frames: $(Manual).texi
+frame: frames
+frames: $(Manual)_frame.html
+$(Manual)_frame.html: $(Manual).texi
 	@-rm -f *.html
 	$(TEXI2ANY) \
 		-D LongContents \
@@ -215,20 +218,15 @@ frames: $(Manual).texi
 		--html $(Manual).texi -o .
 	@echo
 	@echo
-	@echo "Frame HTML created. See $(Manual)_frame.xml"
-	@echo
-	@echo
+	@echo "Frame HTML created. See $(Manual)_frame.html"
 
 .PHONY: pdf2
 pdf2: docbook
 ifneq ($(dblatex_exists),)
 	dblatex --pdf $(Manual).dbk -o $(Manual).pdf
 	@echo
-	@echo
 	@echo "Alternative form of PDF."
 	@echo "PDF created. See $(Manual).pdf"
-	@echo
-	@echo
 else
 	@echo "Program \"dblatex\" missing."
 	@echo "Run or read file 'configure' for information on adding this program."
@@ -240,7 +238,6 @@ ifneq ($(xmlto_exists),)
 	@-rm -f *.html
 	xmlto --skip-validation html $(Manual).dbk
 	@echo
-	@echo
 	@echo "Alternative form of HTML."
 	@echo "Use \"make all\" for regular HTML."
 	@echo "To view type:"
@@ -248,8 +245,6 @@ ifneq ($(xmlto_exists),)
 	@echo "               nautilus .          (GNOME Desktop)"
 	@echo "               explorer .          (Windows/Cygwin)"
 	@echo "               explorer index.html (Windows/Cygwin)"
-	@echo
-	@echo
 else
 	@echo "Program \"xmlto\" missing."
 	@echo "Run or read file 'configure' for information on adding this program."
@@ -259,28 +254,30 @@ endif
 xml: TEXI2DVI_FLAGS += -D XML
 xml: $(Manual).xml
 $(Manual).xml: $(Manual).texi
-	@$(if $(findstring -D XML,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --xml $(Manual).texi ; echo ; echo ; echo "XML created. See $(Manual).xml"; echo )
+	@$(if $(findstring -D XML,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --xml $(Manual).texi ; echo "XML created. See $(Manual).xml" )
 
+.PHONY: dbk
 .PHONY: docbook
+dbk: docbook
 docbook: TEXI2DVI_FLAGS += -D DOCBOOK
 docbook: $(Manual).dbk
 $(Manual).dbk: $(Manual).texi
-	@$(if $(findstring -D DOCBOOK,$(TEXI2DVI_FLAGS)), echo; echo; $(TEXI2ANY) --docbook $(Manual).texi -o $(Manual).dbk; echo ; echo "DocBook created. See $(Manual).dbk" ; echo )
-	@$(if $(findstring -D DOCBOOK,$(ALT_TEXI2DVI_FLAGS)), echo; echo; $(TEXI2ANY) --docbook $(Manual).texi -o $(Manual).dbk; echo ; echo "DocBook created. See $(Manual).dbk" ; echo )
+	@$(if $(findstring -D DOCBOOK,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --docbook $(Manual).texi -o $(Manual).dbk; echo "DocBook created. See $(Manual).dbk" )
+	@$(if $(findstring -D DOCBOOK,$(ALT_TEXI2DVI_FLAGS)), $(TEXI2ANY) --docbook $(Manual).texi -o $(Manual).dbk; echo "DocBook created. See $(Manual).dbk" )
 
 .PHONY: pdf
 pdf: TEXI2DVI_FLAGS += -D PDF
 pdf: $(Manual).pdf
 $(Manual).pdf: $(Manual).texi
-	@$(if $(findstring -D PDF,$(TEXI2DVI_FLAGS)), $(TEXI2DVI) --pdf $(Manual).texi -o $(Manual).pdf ; echo; echo "PDF created. See $(Manual).pdf" ; echo )
-	@$(if $(findstring -D PDF,$(ALT_TEXI2DVI_FLAGS)), $(TEXI2DVI) --pdf $(Manual).texi -o $(Manual).pdf ; echo; echo "PDF created. See $(Manual).pdf" ; echo )
+	@$(if $(findstring -D PDF,$(TEXI2DVI_FLAGS)), $(TEXI2DVI) --pdf $(Manual).texi -o $(Manual).pdf ; echo "PDF created. See $(Manual).pdf" )
+#	@$(if $(findstring -D PDF,$(ALT_TEXI2DVI_FLAGS)), $(TEXI2DVI) --pdf $(Manual).texi -o $(Manual).pdf ; echo "PDF created. See $(Manual).pdf" )
 
 .PHONY: djvu
 djvu: TEXI2DVI_FLAGS += -D PDF -D DJVU
 djvu: $(Manual).djvu
 $(Manual).djvu: $(Manual).pdf
 ifneq ($(pdf2djvu_exists),)
-	@$(if $(findstring -D DJVU,$(TEXI2DVI_FLAGS)), pdf2djvu -o $(Manual).djvu $(Manual).pdf ; echo; echo "DjVu file created. See $(Manual).djvu" ; echo )
+	@$(if $(findstring -D DJVU,$(TEXI2DVI_FLAGS)), pdf2djvu -o $(Manual).djvu $(Manual).pdf ; echo "DjVu file created. See $(Manual).djvu" )
 else
 	@echo "Program \"pdf2djvu\" missing."
 	@echo "Run or read file 'configure' for information on adding this program."
@@ -291,13 +288,12 @@ epub: TEXI2DVI_FLAGS += -D EPUB -D DOCBOOK
 epub: $(Manual).epub
 $(Manual).epub: $(Manual).dbk
 ifneq ($(dbtoepub_exists),)
-	@$(if $(findstring -D EPUB,$(TEXI2DVI_FLAGS)), dbtoepub $(Manual).dbk ; mv -f $(Manual).dbk.epub $(Manual).epub ; echo ; echo "EPUB created with images. See $(Manual).epub" ; echo "$(Manual).epub can be imported into a EPUB e-book" ; echo "editor such as sigil." ; echo )
+	@$(if $(findstring -D EPUB,$(TEXI2DVI_FLAGS)), dbtoepub $(Manual).dbk ; mv -f $(Manual).dbk.epub $(Manual).epub ; echo "EPUB created with images. See $(Manual).epub" ; echo "$(Manual).epub can be imported into a EPUB e-book" ; echo "editor such as sigil." )
 else
 	@echo
 	@echo "Program \"dbtoepub\" missing."
 	@echo "\"dbtoepub\" is needed to generate EPUB documents."
 	@echo "Run or read file 'configure' for information on adding this program."
-	@echo
 endif
 
 .PHONY: plaintext
@@ -308,26 +304,25 @@ $(Manual)_PlainText.txt: $(Manual).texi
 	$(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual)_PlainText.txt
 	@echo
 	@echo "Plain text created. Images have NOT been converted to ASCII. See $(Manual).txt"
-	@echo
 
 .PHONY: plaintextsplit
 plaintextsplit: TEXI2DVI_FLAGS += -D TEXT
 plaintextsplit: plaintextsplit/$(Manual).txt
 plaintextsplit/$(Manual).txt: $(Manual).texi
 	@-rm -f images/*.txt
-	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o plaintextsplit ; echo ; echo "Split plain text created. Images have NOT been converted to ASCII. See directory plaintextsplit" ; echo )
+	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o plaintextsplit ; echo "Split plain text created. Images have NOT been converted to ASCII. See directory plaintextsplit" )
 
 .PHONY: text
 text: TEXI2DVI_FLAGS += -D TEXT
 text: $(Manual).txt
 $(Manual).txt: $(Manual).texi $(JPG_FILES_TO_TXT) $(PNG_FILES_TO_TXT)
-	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual).txt ; echo ; echo "Plain text created. Images converted to ASCII. See $(Manual).txt" ; echo )
+	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --no-headers $(Manual).texi -o $(Manual).txt ; echo "Plain text created. Images converted to ASCII. See $(Manual).txt" )
 
 .PHONY: textsplit
 textsplit: TEXI2DVI_FLAGS += -D TEXT
 textsplit: textsplit/$(Manual).txt
 textsplit/$(Manual).txt: $(Manual).texi $(JPG_FILES_TO_TXT) $(PNG_FILES_TO_TXT)
-	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o textsplit ; echo ; echo "Split plain text created. Images converted to ASCII. See directory textsplit" ; echo )
+	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o textsplit ; echo "Split plain text created. Images converted to ASCII. See directory textsplit" )
 
 .PHONY: zip
 zip: TEXI2DVI_FLAGS += -D ZIP
@@ -354,21 +349,21 @@ postscript: ps
 ps: TEXI2DVI_FLAGS += -D POSTSCRIPT
 ps: $(Manual).ps
 $(Manual).ps: $(Manual).texi $(JPG_FILES_TO_EPS) $(PNG_FILES_TO_EPS) $(GIF_FILES_TO_EPS)
-	@$(if $(findstring -D POSTSCRIPT,$(TEXI2DVI_FLAGS)), $(TEXI2DVI) --ps $(Manual).texi; echo ; echo "PostScript created. See $(Manual).ps"; echo )
+	@$(if $(findstring -D POSTSCRIPT,$(TEXI2DVI_FLAGS)), $(TEXI2DVI) --ps $(Manual).texi; echo "PostScript created. See $(Manual).ps" )
 
 .PHONY: dvi
 dvi: TEXI2DVI_FLAGS += -D DVI
 dvi: $(Manual).dvi
 $(Manual).dvi: $(Manual).texi $(JPG_FILES_TO_EPS) $(PNG_FILES_TO_EPS) $(GIF_FILES_TO_EPS)
-	@$(if $(findstring -D DVI,$(TEXI2DVI_FLAGS)), $(TEXI2DVI) --dvi $(Manual).texi ; echo; echo "Device independent file format (DVI) created. See $(Manual).dvi"; echo)
+	@$(if $(findstring -D DVI,$(TEXI2DVI_FLAGS)), $(TEXI2DVI) --dvi $(Manual).texi ; echo "Device independent file format (DVI) created. See $(Manual).dvi" )
 
 # Build Microsoft HTML Helper File (.chm)
 # The HTML Helper only runs under Windows
 .PHONY: htmlhelp
 htmlhelp: $(Manual).texi $(Manual).dbk
+ifneq ($(a2x_exists),)
 	@mv -f $(Manual).dbk $(Manual).xml
 	a2x -v -f htmlhelp --icons -D . $(Manual).xml
-	@echo
 	@echo
 	@echo "Under Cygwin or MingGW download the Microsoft HTML Help Workshop."
 	@echo "copy hhc.exe to this directory."
@@ -376,8 +371,10 @@ htmlhelp: $(Manual).texi $(Manual).dbk
 	@echo "The name of the created file will be \"$(Manual).chm\". Double click to run"
 	@echo "this file under Windows. Microsoft HTML Helper files will not run from"
 	@echo "network drives."
-	@echo
-	@echo
+else
+	@echo "Program \"a2x\" missing."
+	@echo "Run or read file 'configure' for information on adding this program."
+endif
 
 # Run spelling checker on .texi content
 .PHONY: spell
