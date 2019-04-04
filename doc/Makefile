@@ -1,5 +1,5 @@
 # Texinfo Publisher.
-# Copyright (C) Anthony Bradford 2012.
+# Copyright (C) A. Bradford 2012.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ CSS=''
 # The EPUB format needs command dbtoepub to be created
 dbtoepub_exists = $(shell { type dbtoepub; } 2>/dev/null)
 ifneq ($(dbtoepub_exists),)
-	TEXI2DVI_FLAGS += -D EPUB
+	TEXI2DVI_FLAGS += -D DOCBOOK -D EPUB
 endif
 
 zip_exists = $(shell { type zip; } 2>/dev/null)
@@ -52,18 +52,6 @@ ifneq (,$(findstring PDF,$(TEXI2DVI_FLAGS)))
 else
 	PRE_BODY_CLOSE = ''
 	AFTER_BODY_OPEN = ''
-endif
-
-ifneq (,$(findstring DJVU,$(TEXI2DVI_FLAGS)))
-	ifeq (,$(findstring PDF,$(TEXI2DVI_FLAGS)))
-		ALT_TEXI2DVI_FLAGS += -D PDF
-	endif
-endif
-
-ifneq (,$(findstring EPUB,$(TEXI2DVI_FLAGS)))
-	ifeq (,$(findstring DOCBOOK,$(TEXI2DVI_FLAGS)))
-		ALT_TEXI2DVI_FLAGS += -D DOCBOOK
-	endif
 endif
 
 IMAGES_DIR := images
@@ -174,7 +162,7 @@ $(Manual).tar.gz:
 	else \
 		(cd .. && tar --exclude '*.eps' --exclude '.git' --exclude 'bak' -czvf $(Manual).tar.gz $(notdir $(shell pwd)) ); \
 		(mv -f ../$(Manual).tar.gz .); \
-	fi
+	fi;
 
 .PHONY: html
 html: all
@@ -216,7 +204,6 @@ $(Manual)_frame.html: $(Manual).texi
 		$(CUSTOM) $(AFTER_BODY_OPEN) \
 		--css-include=$(CSS) \
 		--html $(Manual).texi -o .
-	@echo
 	@echo
 	@echo "Frame HTML created. See $(Manual)_frame.html"
 
@@ -263,14 +250,12 @@ docbook: TEXI2DVI_FLAGS += -D DOCBOOK
 docbook: $(Manual).dbk
 $(Manual).dbk: $(Manual).texi
 	@$(if $(findstring -D DOCBOOK,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --docbook $(Manual).texi -o $(Manual).dbk; echo "DocBook created. See $(Manual).dbk" )
-	@$(if $(findstring -D DOCBOOK,$(ALT_TEXI2DVI_FLAGS)), $(TEXI2ANY) --docbook $(Manual).texi -o $(Manual).dbk; echo "DocBook created. See $(Manual).dbk" )
 
 .PHONY: pdf
 pdf: TEXI2DVI_FLAGS += -D PDF
 pdf: $(Manual).pdf
 $(Manual).pdf: $(Manual).texi
 	@$(if $(findstring -D PDF,$(TEXI2DVI_FLAGS)), $(TEXI2DVI) --pdf $(Manual).texi -o $(Manual).pdf ; echo "PDF created. See $(Manual).pdf" )
-#	@$(if $(findstring -D PDF,$(ALT_TEXI2DVI_FLAGS)), $(TEXI2DVI) --pdf $(Manual).texi -o $(Manual).pdf ; echo "PDF created. See $(Manual).pdf" )
 
 .PHONY: djvu
 djvu: TEXI2DVI_FLAGS += -D PDF -D DJVU
@@ -290,7 +275,6 @@ $(Manual).epub: $(Manual).dbk
 ifneq ($(dbtoepub_exists),)
 	@$(if $(findstring -D EPUB,$(TEXI2DVI_FLAGS)), dbtoepub $(Manual).dbk ; mv -f $(Manual).dbk.epub $(Manual).epub ; echo "EPUB created with images. See $(Manual).epub" ; echo "$(Manual).epub can be imported into a EPUB e-book" ; echo "editor such as sigil." )
 else
-	@echo
 	@echo "Program \"dbtoepub\" missing."
 	@echo "\"dbtoepub\" is needed to generate EPUB documents."
 	@echo "Run or read file 'configure' for information on adding this program."
@@ -622,6 +606,23 @@ help:
 .PHONY: nothing
 nothing:
 	@echo "Nothing done."
+
+.PHONY: exists
+exists:
+	@echo $(dbtoepub_exists)
+	@echo $(zip_exists)
+	@echo $(texi2any_exists)
+	@echo $(xmlto_exists)
+	@echo $(convert_exists)
+	@echo $(linkchecker_exists)
+	@echo $(aspell_exists)
+	@echo $(diction_exists)
+	@echo $(style_exists)
+	@echo $(pdf2djvu_exists)
+	@echo $(dblatex_exists)
+	@echo $(epstopdf_exists)
+	@echo $(jp2a_exists)
+	@echo $(a2x_exists)
 
 .PHONY: distclean
 distclean: clean
