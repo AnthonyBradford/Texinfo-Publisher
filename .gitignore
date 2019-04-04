@@ -1,5 +1,6 @@
 *~
 *.html
+*.xml
 *.dbk
 *.epub
 *.info
@@ -21,10 +22,14 @@
 *.toc
 *.tp
 *.vr
+*.hhc
+*.hhk
+*.hhp
 bak/
 doc/bak
 images/*.txt
 doc/images/*.txt
 images/*.eps
 doc/images/*.eps
+*.htmlhelp/
 typescript
