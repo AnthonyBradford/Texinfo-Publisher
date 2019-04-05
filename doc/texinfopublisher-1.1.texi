@@ -145,7 +145,7 @@ Copyright @copyright{}  @var{2012}  @var{A. Bradford}.
 @chapter Overview of Texinfo Publisher
 @cindex Overview of Texinfo Publisher
 @cindex Makefile
-Texinfo Publisher is a @file{Makefile} based publishing system featuring simultaneous content creation into HTML, non-split HTML, Framed HTML, HTML Zip, XML, DocBook, PDF, DjVu, PostScript, DVI, Plain text, Info and EPUB book formats. All Texinfo Publisher output formats are from a single source. Texinfo Publisher can be used for website creation.
+Texinfo Publisher is a @file{Makefile} based publishing system featuring simultaneous content creation into HTML, non-split HTML, Framed HTML, HTML Zip, XML, DocBook, PDF, DjVu, PostScript, DVI, Plain text, Info and EPUB book formats. All Texinfo Publisher output formats are from a single Texinfo source. Texinfo Publisher can be used for website creation.
 @*
 @*
 Texinfo Publisher also features
@@ -162,7 +162,7 @@ Texinfo Publisher also features
 @item Microsoft HTML Helper creation
 @end itemize
 @cindex Texinfo
-Texinfo Publisher is a low maintenance solution for publishing websites with multi-format matching content. Texinfo Publisher can be used for internal proprietary corporate documentation.
+Texinfo Publisher is a low maintenance solution for publishing websites with multi-format matching content. Texinfo Publisher can be used for proprietary corporate documentation.
 @*
 @*
 @ifnothtml
@@ -309,14 +309,18 @@ To view content run the following command depending on which system or desktop y
 @tab Windows / Cygwin
 @end multitable
 @*
-From the main HTML page, index.html, you will see links labeled
+From the main HTML page, @file{index.html}, you will see links labeled
 @cindex tar
 @itemize
-@item PDF content of this website
+@item PDF version of this website
 @item HTML version of this website
+@item Framed HTML version of this website
 @item Single-page HTML version of this website
-@item Text content of this website
-@item EPUB content of this website
+@item Text version of this website
+@item Plain text version of this website
+@item Split text version of this website
+@item Split plain text version of this website
+@item EPUB version of this website
 @item HTML zip package of this website
 @item Gzipped tar source of this website 
 @end itemize
@@ -327,7 +331,7 @@ Click on these links to view the formats. Content between all formats is matchin
 @cindex Single-page HTML
 @cindex Non-split HTML
 @cindex HTML (split vs. non-split)
-HTML or split HTML indicates Texinfo source is compiled to multiple HTML pages. Single-page (Non-split) HTML indicates Texinfo source is compiled to one large HTML page.
+HTML or split HTML indicates Texinfo source is compiled to multiple HTML pages. Single-page (non-split) HTML indicates Texinfo source is compiled to one large HTML page.
 
 @section More building options
 @table @samp
@@ -896,14 +900,16 @@ To re-size PNG images type
 @example
 make resizepng
 @end example
-Both commands make a backup of the images in @file{texinfopublisher-@value{VERSION}/images/bak/}. All images will be re-sized to 640x480. This new image size might be better for HTML display.
+To re-size both JPEG and PNG files
+@example
+make resize
+@end example
+The @command{make resize} command makes backups of the original images in @file{images/bak/} directory. All images will be re-sized to 960x576, 640x480 and 320x240. These new image sizes might be better for HTML display.
 
 @section Image format converting
 @anchor{Imageconverting}
 Texinfo Publisher does batch image format conversions in the directory @file{texinfopublisher-@value{VERSION}/images/}.
 Images are converted to the target formats. The original image format file is left un-touched.
-The @file{images/} directory is backed-up to the @file{texinfopublisher-@value{VERSION}/images/bak/} directory by @command{make} or @command{make all}.
-
 @cindex .jpg
 @cindex .png
 @cindex .gif
@@ -939,19 +945,10 @@ Converts GIF format to the PNG format.
 @cindex make gif2jpg
 @item make gif2jpg
 Converts GIF format to the JPG format.
-@cindex pdf2png
-@cindex PDF
-@cindex make pdf2png
-@item make pdf2png
-Converts PDF format to the PNG format.
 @cindex eps2pdf
 @cindex make eps2pdf
 @item make eps2pdf
 Converts EPS format to the PDF format.
-@cindex eps2png
-@cindex make eps2png
-@item make eps2png
-Converts EPS format to the PNG format.
 @cindex jpg2txt
 @cindex make jpg2txt
 @cindex jp2a
