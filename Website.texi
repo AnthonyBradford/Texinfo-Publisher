@@ -29,7 +29,7 @@ All rights reserved.
 @title Texinfo Website Template
 @subtitle for version @today{}
 @sp 10
-@author @email{anthony_bradford@@yahoo.com,Anthony Bradford}
+@author @email{anthony_bradford@@yahoo.com,A. Bradford}
 @page
 @vskip 0pt plus 1filll
 @insertcopying
@@ -208,8 +208,7 @@ Some email examples
 @*
 @email{anthony_bradford@@yahoo.com}.
 @*
-@email{anthony_bradford@@yahoo.com,Anthony Bradford}.
-
+@email{anthony_bradford@@yahoo.com,A. Bradford}.
 
 @section This is Chapter 6 section.
 @subsection This is Chapter 6 subsection.
