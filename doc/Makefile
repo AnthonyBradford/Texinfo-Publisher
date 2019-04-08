@@ -372,7 +372,7 @@ else
 	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
-# Check diction. For more information type 'man diction' on the command line
+# Check diction. For more information type 'man diction' on the command line.
 .PHONY: diction
 diction:
 ifneq ($(diction_exists),)
@@ -385,7 +385,7 @@ else
 	@echo "Run or read file 'configure' for information on adding this program."
 endif
 
-# Check style. For more information type 'man style' on the command line
+# Check style. For more information type 'man style' on the command line.
 .PHONY: style
 style:
 ifneq ($(style_exists),)
