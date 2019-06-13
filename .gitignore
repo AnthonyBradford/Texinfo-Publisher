@@ -33,3 +33,4 @@ images/*.eps
 doc/images/*.eps
 *.htmlhelp/
 typescript
+*.texi2
