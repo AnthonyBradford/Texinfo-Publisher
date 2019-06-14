@@ -95,7 +95,7 @@ Images are not converted to ASCII.
 Run the command 'make info'.
 Builds: Website.info
 
-Run the command 'make htmlhelper'.
+Run the command 'make htmlhelp'.
 This will create the file Website.hhp which can be made into a
 Microsoft HTML Helper file (.chm) with the utility hhc.exe
 

@@ -121,7 +121,7 @@ else
 	CUSTOM = -U CUST
 endif
 
-CLEAN_OBJECTS = *.html *.zip *.pdf *.djvu *.djv *.aux *.cp *.cps *.fn *.ky *.log *.op *.pg *.toc *.tp *.vr *.txt *.xml *.dbk *.hhc *.hhk *.hhp *.htmlhelp/docbook-xsl.css *.htmlhelp/*html *.htmlhelp/images/* *.epub *.proc *.dvi *.ps *.info *.info-* *.tar.gz *~ textsplit/* plaintextsplit/* images/*.txt images/*.eps
+CLEAN_OBJECTS = *.html *.zip *.pdf *.djvu *.djv *.aux *.cp *.cps *.fn *.ky *.log *.op *.pg *.toc *.tp *.vr *.txt *.xml *.dbk *.hhc *.hhk *.hhp *.htmlhelp/docbook-xsl.css *.htmlhelp/*html *.htmlhelp/images/* *.epub *.proc *.dvi *.ps *.info *.info-* *.tar.gz *~ textsplit/* plaintextsplit/* images/*.txt images/*.eps *.texi2
 
 .PHONY: all
 all: $(PNG_FILES_TO_LOWERCASE) $(JPG_FILES_TO_LOWERCASE) $(JPEG_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(jpeg_FILES_TO_LOWERCASE) $(Manual).tar.gz $(Manual)_PlainText.txt plaintextsplit/$(Manual).txt index.html indexNoSplit.html $(Manual).pdf $(Manual).djvu $(Manual).info $(Manual).txt textsplit/$(Manual).txt $(Manual).epub $(Manual).xml $(Manual).ps $(Manual).dvi $(Manual).zip backup message
@@ -251,6 +251,11 @@ docbook: $(Manual).dbk
 $(Manual).dbk: $(Manual).texi
 	@$(if $(findstring -D DOCBOOK,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --docbook $(Manual).texi -o $(Manual).dbk; echo "DocBook created. See $(Manual).dbk" )
 
+$(Manual).texi2:
+$(Manual).texi2: $(Manual).texi
+	sed 's/@\*/@\*\n@ifdocbook\n\n@end ifdocbook/g' $(Manual).texi >$(Manual).texi2
+	texi2any --docbook $(Manual).texi2 -o $(Manual).dbk
+
 .PHONY: pdf
 pdf: TEXI2DVI_FLAGS += -D PDF
 pdf: $(Manual).pdf
@@ -296,6 +301,8 @@ plaintextsplit/$(Manual).txt: $(Manual).texi
 	@-rm -f images/*.txt
 	@$(if $(findstring -D TEXT,$(TEXI2DVI_FLAGS)), $(TEXI2ANY) --split=chapter --no-headers $(Manual).texi -o plaintextsplit ; echo "Split plain text created. Images have NOT been converted to ASCII. See directory plaintextsplit" )
 
+.PHONY: txt
+txt: text
 .PHONY: text
 text: TEXI2DVI_FLAGS += -D TEXT
 text: $(Manual).txt
@@ -344,7 +351,10 @@ $(Manual).dvi: $(Manual).texi $(JPG_FILES_TO_EPS) $(PNG_FILES_TO_EPS) $(GIF_FILE
 # Build Microsoft HTML Helper File (.chm)
 # The HTML Helper only runs under Windows
 .PHONY: htmlhelp
-htmlhelp: $(Manual).texi $(Manual).dbk
+.PHONY: htmlhelper
+htmlhelper: htmlhelp
+htmlhelp: $(Manual).hhp
+$(Manual).hhp: $(Manual).texi $(Manual).texi2
 ifneq ($(a2x_exists),)
 	@mv -f $(Manual).dbk $(Manual).xml
 	a2x -v -f htmlhelp --icons -D . $(Manual).xml
@@ -355,6 +365,7 @@ ifneq ($(a2x_exists),)
 	@echo "The name of the created file will be \"$(Manual).chm\". Double click to run"
 	@echo "this file under Windows. Microsoft HTML Helper files will not run from"
 	@echo "network drives."
+	#./hhc.exe $(Manual).hhp
 else
 	@echo "Program \"a2x\" missing."
 	@echo "Run or read file 'configure' for information on adding this program."
